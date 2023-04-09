@@ -1,11 +1,20 @@
-import React from 'react'
+import React from "react";
+import {
+  LandingHero,
+  LandingOffer,
+  LandingHowItWorks,
+} from "../components/Landing/Index";
 
-type Props = {}
+type Props = {};
 
 const Landing = (props: Props) => {
   return (
-    <div>Landing</div>
-  )
-}
+    <div>
+      <LandingHero />
+      <LandingOffer />
+      <LandingHowItWorks />
+    </div>
+  );
+};
 
-export default Landing
+export default Landing;

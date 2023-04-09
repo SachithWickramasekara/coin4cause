@@ -4,7 +4,7 @@ type Props = {};
 
 const Navbar = (props: Props) => {
   return (
-    <header className="text-gray-600 body-font bg-[#08415C]">
+    <header className="text-white body-font bg-[#08415C]">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <div className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
           <span className="ml-3 text-xl">
@@ -25,7 +25,7 @@ const Navbar = (props: Props) => {
             Fourth Link
           </div>
         </nav>
-        <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+        <button className="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none rounded text-base mt-4 md:mt-0">
           Button
           <svg
             fill="none"
