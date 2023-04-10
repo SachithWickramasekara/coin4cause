@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { SignInInputBox, DropDownBox } from "./SignInInputBox";
 import { useNavigate } from 'react-router-dom';
-
+import { GoogleLogin } from "@react-oauth/google";
 
 function SigninForm() {
+
+  const responseMessage = (response) => {
+    console.log(response);
+    navigate("../hometemp");
+  };
+  const errorMessage = (error) => {
+    console.log(error);
+  };
   
   const [state, setState] = useState({
     fname: "",
@@ -116,6 +124,11 @@ function SigninForm() {
         </div>
         <button type="submit">Next</button>
       </form>
+      <GoogleLogin
+        onSuccess={responseMessage}
+        onError={errorMessage}
+      />
+      <br></br>
       <p>
         Already have an account?{" "}
         <a href="../login">
