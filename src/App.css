@@ -1,0 +1,228 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i");
+@import url('./css/satoshi.css');
+
+* {
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+  }
+  
+  :root {
+    --font-roboto: "Satoshi-Light", serif;
+    --font-raleway: "Raleway", sans-serif;
+  }
+  
+  body {
+    font-family: var(--font-roboto);
+    z-index: 0;
+  }
+  
+  .app {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(180deg, #08415C, #00B5D5);
+    z-index: 0;
+  }
+
+  .dot {
+    height: 200px;
+    width: 200px;
+    transform: translate(0%, 75%);
+    background-color: #FEAE0F;
+    border-radius: 50%;
+    display: inline-block;
+    z-index: -1;
+  }
+
+
+  .inputBoxContainer {
+    background-color: transparent;
+    border: 2px solid #FFFFFF;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
+    margin-bottom: 167px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2));
+    z-index: 0;
+  }
+
+  .inputDetails {
+    text-align: center;
+    z-index: 0;
+    
+  }
+
+  .inputDetails input {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 10px;
+    width: var(--input-width, 100%);
+    font-size: 20px;
+    background-color: transparent;
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #FFFFFF;
+    flex-direction: column;
+    z-index: 0;
+  }
+
+
+
+ ::-ms-input-placeholder {
+    color: #FFFFFF;
+    opacity: 0.4;
+  }
+  ::placeholder {
+    color: #FFFFFF;
+    opacity: 0.4;
+  }
+
+
+  .inputDetails h1 {
+    color: #FFFFFF;
+    font-weight: bold;
+    margin: 175px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    font-size: 32px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .inputDetails p {
+    color: #FFFFFF;
+    font-size: 16px;
+    text-align: right;
+    margin-bottom: 20px;
+
+  }
+
+  .inputDetails a {
+    text-decoration: none;
+    color: white;
+  }
+
+  .inputDetails button {
+    font-size: 22px;
+    color: #FFFFFF;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #FEAE0F;
+    border-radius: 8px;
+    padding: 75px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+  }
+
+  .navBar {
+    padding: 25px;
+    width: 100%;
+    z-index: 0;
+  }
+  
+  .navBar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    z-index: 0;
+  }
+  
+  .navBar li {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin: 0 10px;
+    z-index: 0;
+  }
+  
+  .navBar li img {
+    margin-left: 10px;
+    z-index: 0;
+    margin-right: 400px;
+    
+  }
+  
+  .navBar p {
+    margin: 0;
+    padding: 0 10px;
+    color: #FFFFFF;
+    text-align: center;
+    flex: 1;
+    z-index: 0;
+  }
+  
+  .navBar li button {
+    margin-left: 500px;
+    padding: 10px;
+    align-self: right;
+    text-align: right;
+    border-style: solid;
+    background-color: transparent;
+    border-color: #00B5D5;
+    color: #00B5D5;
+    border-width: 1px;
+    border-radius: 4px;
+    z-index: 0;
+  }
+
+  .inputBoxes {
+    position: relative;
+    width: 100%;
+  }
+
+  .inputBoxes p {
+    color: #FFF;
+    text-align: left; 
+    margin-bottom: 10px;
+    
+  }
+
+  .dropdown {
+    position: relative;
+    flex-direction: column;
+  }
+  
+  .dropdown input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  .dropdown img {
+    position: absolute;
+  }
+  
+  .options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    padding: 5px;
+    margin-top: 5px;
+    width: 100%;
+    z-index: 1;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .option {
+    padding: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .option:hover {
+    background-color: #f2f2f2;
+  }
