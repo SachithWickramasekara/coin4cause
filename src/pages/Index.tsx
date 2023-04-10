@@ -1,5 +1,6 @@
 import Campaign from "./Campaign";
-import Dashboard from "./Dashboard";
 import Landing from "./Landing";
+import About from "./About";
+import Services from "./Services";
 
-export { Campaign, Dashboard, Landing };
+export { Campaign, About, Landing ,Services };

@@ -2,8 +2,6 @@ import React from 'react'
 import OfferCard from '../../Cards/OfferCard';
 import { offercardData } from '../../Constants/coin4causeData';
 
-type Props = {}
-
 const LandingOffer = () => {
   return (
     <div>
