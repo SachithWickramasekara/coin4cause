@@ -10,8 +10,8 @@ module.exports = async (email, subject, text) => {
 			service: 'gmail',
 			
 			auth: {
-				user: 'dinujaya.20210418@iit.ac.lk',
-				pass: 'Rubiks cube#123#',
+				user: '',
+				pass: '',
 			},
 		}));
 
