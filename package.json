@@ -5,6 +5,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.17",
+    "@react-oauth/google": "^0.10.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -49,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@types/loadable__component": "^5.13.4",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "eslint-config-standard-with-typescript": "^34.0.1",
     "eslint-plugin-import": "^2.25.2",
