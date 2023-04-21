@@ -5,7 +5,7 @@ type Props = {};
 const LandingHowItWorks = (props: Props) => {
   return (
     <section className=" body-font bg-[#EFF4F8]">
-      <div className="container mx-auto flex lg:px-20 py-24 md:flex-col lg:flex-row flex-col items-center">
+      <div className="container mx-auto flex lg:px-20 px-8 py-24 md:flex-col lg:flex-row flex-col items-center">
         <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
           <img
             className="object-cover object-center rounded"
@@ -35,8 +35,8 @@ const LandingHowItWorks = (props: Props) => {
             about.
           </p>
           <div className="flex justify-center">
-            <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-              Button
+            <button className="inline-flex text-[#00B5D5] bg-none border border-[#00B5D5] py-2 px-6 focus:outline-none hover:bg-[#00B5D5] hover:text-white rounded text-lg">
+              Learn More
             </button>
           </div>
         </div>
