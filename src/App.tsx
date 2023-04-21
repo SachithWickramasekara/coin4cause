@@ -11,8 +11,22 @@ import Step2 from "./pages/CreateCampaign/Step2";
 import Step3 from "./pages/CreateCampaign/Step3";
 import Step4 from "./pages/CreateCampaign/Step4";
 import StepDone from "./pages/CreateCampaign/StepDone";
+import { useState, useEffect } from "react";
+import LoadingScreen from "./pages/LoadingScreen";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay with setTimeout
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+  }, []);
+
+  if (loading) {
+    return <LoadingScreen/>;
+  }
   return (
     <div className="App">
       <Navbar />
