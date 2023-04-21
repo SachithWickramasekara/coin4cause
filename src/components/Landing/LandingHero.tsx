@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { routePaths } from "../../routes/routes";
 
 type Props = {};
 
@@ -16,7 +18,16 @@ const LandingHero = (props: Props) => {
             create and fund donation campaigns for various social, cultural and
             environmental causes
           </div>
-          <div></div>
+          <div className="flex flex-row gap-4 justify-center lg:justify-start">
+            <Link to={routePaths.step1}>
+            <button className=" bg-none text-[#00B5D5] p-2 rounded-md hover:bg-[#00B5D5] hover:text-white border border-[#00B5D5]">
+              Start a Campaign
+            </button>
+            </Link>
+            <button className="bg-none text-[#00B5D5] p-2 rounded-md hover:bg-[#00B5D5] hover:text-white border border-[#00B5D5]">
+              Donate 💙
+            </button>
+          </div>
         </div>
         {/* lg:max-w-lg lg:w-full md:w-1/2 w-5/6 */}
 
