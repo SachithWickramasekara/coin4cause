@@ -66,13 +66,13 @@ const Login = () => {
           className="box relative bottom-40 w-[480px] px-12"
         >
           <div className="py-12 text-center font-bold text-3xl">Login</div>
-          <div className="flex flex-col gap-8 ">
+          <div className="flex flex-col gap-8 px-8  sm:px-0">
             <input
               type="text"
               name="Username"
               placeholder="Username"
               onChange={(e) => setState({ ...state, email: e.target.value })}
-              className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+              className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent "
             />
             <input
               type="password"
@@ -82,7 +82,7 @@ const Login = () => {
               className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
             />
           </div>
-          <div className="flex justify-end py-4 text-sm font-normal">
+          <div className="flex justify-end py-4 text-sm font-normal px-8 sm:px-0">
             Forgot Password?
           </div>
           <div className="py-5">
@@ -95,8 +95,8 @@ const Login = () => {
           </div>
           <div className="text-center text-sm pb-4">
             <span>Don’t have an account? </span>
-            <Link to={routePaths.signup} >
-            <span className="font-bold cursor-pointer">SIGN UP</span>
+            <Link to={routePaths.signup}>
+              <span className="font-bold cursor-pointer">SIGN UP</span>
             </Link>
           </div>
           <div></div>

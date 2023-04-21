@@ -7,4 +7,9 @@ export const routePaths = {
   signup: "/signup",
   usernamepassword: "/usernamepassword",
   emailverify: "/emailverify",
+  step1: "/create-campaignStep1",
+  step2: "/create-campaignStep2",
+  step3: "/create-campaignStep3",
+  step4: "/create-campaignStep4",
+  done:"/done"
 };
