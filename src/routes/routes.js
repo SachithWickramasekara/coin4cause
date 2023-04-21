@@ -3,4 +3,8 @@ export const routePaths = {
   about: "/about",
   campaings: "/campaings",
   services: "/services",
+  login: "/login",
+  signup: "/signup",
+  usernamepassword: "/usernamepassword",
+  emailverify: "/emailverify",
 };

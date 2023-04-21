@@ -2,6 +2,10 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./layout/Navbar";
 import { Landing, About, Campaign, Services } from "./pages/Index";
 import { routePaths } from "./routes/routes";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import UsernamePassword from "./pages/UsernamePassword";
+import EmailVerify from "./pages/EmailVerify";
 
 function App() {
   return (
@@ -9,6 +13,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path={routePaths.home} element={<Landing />} />
+        <Route path={routePaths.login} element={<Login />} />
+        <Route path={routePaths.signup} element={<SignUp />} />
+        <Route path={routePaths.usernamepassword} element={<UsernamePassword />} />
+        <Route path={routePaths.emailverify} element={<EmailVerify />} />
         <Route path={routePaths.campaings} element={<Campaign />} />
         <Route path={routePaths.about} element={<About />} />
         <Route path={routePaths.services} element={<Services />} />
