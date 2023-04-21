@@ -1,5 +1,5 @@
 export const routePaths = {
-  home: "/home",
+  home: "/",
   about: "/about",
   campaings: "/campaings",
   services: "/services",
