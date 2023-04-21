@@ -5,4 +5,6 @@ export const routePaths = {
   services: "/services",
   login: "/login",
   signup: "/signup",
+  usernamepassword: "/usernamepassword",
+  emailverify: "/emailverify",
 };

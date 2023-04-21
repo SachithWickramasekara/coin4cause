@@ -33,7 +33,7 @@ const SignUp = (props: Props) => {
 
     const { fname, lname, email, age, country, phonenum } = state; //remove this
     console.log(
-      `${fname}, ${lname}, ${email}, ${age}, ${country}, ${phonenum}`
+      {fname}, {lname}, {email}, {age}, {country}, {phonenum}
     );
 
     navigate("../usernamepassword", { state });
@@ -70,8 +70,8 @@ const SignUp = (props: Props) => {
     setState({ ...state, age: event.target.value });
   };
 
-  const handleCountryChange = (selectedOption: { label: any }) => {
-    setState({ ...state, country: selectedOption.label });
+  const handleCountryChange = (selectedOption: { value: any }) => {
+    setState({ ...state, country: selectedOption.value });
     setShowCountryDropdown(false);
   };
 
@@ -90,14 +90,20 @@ const SignUp = (props: Props) => {
               <span>First Name</span>
               <input
                 type="text"
-                className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+                placeholder="John"
+                className="w-auto min-w-[266px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent"
+                onChange={(e) => setState({ ...state, fname: e.target.value })}
+                required
               />
             </div>
             <div className="flex flex-col gap-2">
               <span>Surname</span>
               <input
                 type="text"
-                className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+                placeholder="Doe"
+                className="w-auto min-w-[266px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent"
+                onChange={(e) => setState({ ...state, lname: e.target.value })}
+                required
               />
             </div>
           </div>
@@ -106,32 +112,70 @@ const SignUp = (props: Props) => {
               <span>Email</span>
               <input
                 type="email"
-                className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+                placeholder="johnDoe@theboys.com"
+                className="w-auto min-w-[266px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent"
+                onChange={(e) => setState({ ...state, email: e.target.value })}
+                required
               />
             </div>
             <div className="flex flex-col gap-2">
               <span>Age Catergory</span>
-              <select className="w-auto min-w-[266px] outline-none border placeholder:black p-3 border-white rounded-md bg-transparent">
+              <select className="w-auto min-w-[266px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent">
                 <option value="18-25 years">18-25 years</option>
                 <option value="26-35 years">26-35 years</option>
                 <option value="36-45 years">36-45 years</option>
+                <option value="46-56 years">46-56 years</option>
+                <option value="56+ years">56+ years</option>
               </select>
             </div>
           </div>
-          <div className="flex flex-row gap-3">
-            <div className="flex flex-col gap-2">
-              <span>Country</span>
-              <select className="w-auto min-w-[266px] outline-none border placeholder:black p-3 border-white rounded-md bg-transparent">
-                <option value="18-25 years">Algeria</option>
-                <option value="26-35 years">26-35 years</option>
-                <option value="36-45 years">36-45 years</option>
-              </select>
+          <div className="flex flex-row gap-4">
+
+
+          <div className="relative">
+            <span>Country</span>
+            <div className="w-auto min-w-[266px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent"
+              onClick={() => setShowCountryDropdown(true)}
+              onBlur={() => setShowCountryDropdown(false)}>
+            <div className="flex items-center">
+              {state.country ? (
+              <>
+              <img
+                src={countryList.find((c) => c.value === state.country)?.flag}
+                alt={state.country}
+                className="w-4 h-4 mr-2"
+              />
+              <span>{state.country}</span>
+              </>
+            ) : (
+            <span className="text-gray-500">Select a country</span>
+              )}
             </div>
+          {showCountryDropdown && (
+            <div className="absolute left-0 right-0 top-full bg-white border border-gray-200 rounded-md overflow-y-auto max-h-60 z-50">
+            {countryList.map((country) => (
+              <div
+                key={country.value}
+              className="p-2 cursor-pointer hover:bg-gray-200 flex items-center"
+              onClick={() => handleCountryChange(country)}
+          >
+            <img src={country.flag} alt={country.label} className="w-4 h-4 mr-2" />
+            <span>{country.label}</span>
+           </div>
+            ))}
+            </div>
+            )}
+          </div>
+          </div>
+
             <div className="flex flex-col gap-2">
               <span>Mobile Number</span>
               <input
                 type="text"
-                className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+                placeholder="+94 77 51xx xxx"
+                className="w-auto min-w-[266px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent"
+                onChange={(e) => setState({ ...state, phonenum: e.target.value })}
+                required
               />
             </div>
           </div>

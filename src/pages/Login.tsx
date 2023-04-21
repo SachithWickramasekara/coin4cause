@@ -24,33 +24,39 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log("click");
     const { email, password } = state;
-    console.log(email, password);
-
-    fetch("http://localhost:3000/login-user", {
-      method: "POST",
-      //crossDomain: "true",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data, "userAccountRegistered");
-        if (data.status === "ok") {
-          navigate("/home");
-        }
+  
+    try {
+      const response = await fetch("https://coin4cause-server.vercel.app/login-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
+  
+      const data = await response.json();
+      if (data.status === "ok") {
+        // Store the JWT token in localStorage or session storage
+        localStorage.setItem("token", data.token);
+        // Redirect to the home page
+        navigate("/home");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong");
+    }
   };
+  
   return (
     <div className="body text-white overflow-y-hidden">
       <div className="container mx-auto flex flex-col justify-center items-center py-20">
