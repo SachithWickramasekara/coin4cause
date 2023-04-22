@@ -33,7 +33,12 @@ const SignUp = (props: Props) => {
 
     const { fname, lname, email, age, country, phonenum } = state; //remove this
     console.log(
-      {fname}, {lname}, {email}, {age}, {country}, {phonenum}
+      { fname },
+      { lname },
+      { email },
+      { age },
+      { country },
+      { phonenum }
     );
 
     navigate("../usernamepassword", { state });
@@ -75,7 +80,6 @@ const SignUp = (props: Props) => {
     setShowCountryDropdown(false);
   };
 
-  
   return (
     <div className="body text-white">
       <div className="container mx-auto flex flex-col justify-center items-center py-20">
@@ -85,13 +89,13 @@ const SignUp = (props: Props) => {
           className="box relative bottom-40 w-[700px] flex flex-col gap-8 items-center  px-12"
         >
           <div className="py-12 text-center font-bold text-3xl">Sign Up</div>
-          <div className="flex flex-row gap-3">
+          <div className="flex lg:flex-row flex-col gap-3">
             <div className="flex flex-col gap-2">
               <span>First Name</span>
               <input
                 type="text"
                 placeholder="John"
-                className="w-auto min-w-[266px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent"
+                className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
                 onChange={(e) => setState({ ...state, fname: e.target.value })}
                 required
               />
@@ -101,19 +105,19 @@ const SignUp = (props: Props) => {
               <input
                 type="text"
                 placeholder="Doe"
-                className="w-auto min-w-[266px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent"
+                className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
                 onChange={(e) => setState({ ...state, lname: e.target.value })}
                 required
               />
             </div>
           </div>
-          <div className="flex flex-row gap-3">
+          <div className="flex lg:flex-row flex-col gap-3">
             <div className="flex flex-col gap-2">
               <span>Email</span>
               <input
                 type="email"
                 placeholder="johnDoe@theboys.com"
-                className="w-auto min-w-[266px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent"
+                className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
                 onChange={(e) => setState({ ...state, email: e.target.value })}
                 required
               />
@@ -129,52 +133,60 @@ const SignUp = (props: Props) => {
               </select>
             </div>
           </div>
-          <div className="flex flex-row gap-4">
-
-
-          <div className="relative">
-            <span>Country</span>
-            <div className="w-auto min-w-[266px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent"
-              onClick={() => setShowCountryDropdown(true)}
-              onBlur={() => setShowCountryDropdown(false)}>
-            <div className="flex items-center">
-              {state.country ? (
-              <>
-              <img
-                src={countryList.find((c) => c.value === state.country)?.flag}
-                alt={state.country}
-                className="w-4 h-4 mr-2"
-              />
-              <span>{state.country}</span>
-              </>
-            ) : (
-            <span className="text-gray-500">Select a country</span>
-              )}
-            </div>
-          {showCountryDropdown && (
-            <div className="absolute left-0 right-0 top-full bg-white border border-gray-200 rounded-md overflow-y-auto max-h-60 z-50">
-            {countryList.map((country) => (
+          <div className="flex lg:flex-row flex-col gap-4 items-center">
+            <div className="relative">
+              <span>Country</span>
               <div
-                key={country.value}
-              className="p-2 cursor-pointer hover:bg-gray-200 flex items-center"
-              onClick={() => handleCountryChange(country)}
-          >
-            <img src={country.flag} alt={country.label} className="w-4 h-4 mr-2" />
-            <span>{country.label}</span>
-           </div>
-            ))}
+                className="w-auto min-w-[266px] outline-none border placeholder:text-black p-3 border-white rounded-md"
+                onClick={() => setShowCountryDropdown(true)}
+                onBlur={() => setShowCountryDropdown(false)}
+              >
+                <div className="flex items-center">
+                  {state.country ? (
+                    <>
+                      <img
+                        src={
+                          countryList.find((c) => c.value === state.country)
+                            ?.flag
+                        }
+                        alt={state.country}
+                        className="w-4 h-4 mr-2"
+                      />
+                      <span className="">{state.country}</span>
+                    </>
+                  ) : (
+                    <span className="text-gray-500">Select a country</span>
+                  )}
+                </div>
+                {showCountryDropdown && (
+                  <div className="absolute left-0 right-0 top-full bg-white border border-gray-200 rounded-md overflow-y-auto max-h-60 z-50">
+                    {countryList.map((country) => (
+                      <div
+                        key={country.value}
+                        className="p-2 cursor-pointer hover:bg-gray-200 flex items-center"
+                        onClick={() => handleCountryChange(country)}
+                      >
+                        <img
+                          src={country.flag}
+                          alt={country.label}
+                          className="w-4 h-4 mr-2"
+                        />
+                        <span>{country.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-            )}
-          </div>
-          </div>
-
-            <div className="flex flex-col gap-2">
+            <div className="flex lg:flex-row flex-col gap-2">
               <span>Mobile Number</span>
               <input
                 type="text"
                 placeholder="+94 77 51xx xxx"
-                className="w-auto min-w-[266px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent"
-                onChange={(e) => setState({ ...state, phonenum: e.target.value })}
+                className="w-auto min-w-[300px] outline-none border placeholder:text-white-800 p-3 border-white rounded-md bg-transparent"
+                onChange={(e) =>
+                  setState({ ...state, phonenum: e.target.value })
+                }
                 required
               />
             </div>

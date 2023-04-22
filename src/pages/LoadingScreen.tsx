@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import Lottie from  "react-lottie"
+import Lottie from "react-lottie";
 import animationData from "../Lottie/Coin.json";
 
 type Props = {};
@@ -28,8 +28,7 @@ const LoadingScreen = (props: Props) => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
-        <Lottie options={options} height={200} width={200} />
-        Loading.......
+        <Lottie options={options} height={400} width={400} />
       </motion.div>
       <motion.p
         style={{
@@ -44,6 +43,5 @@ const LoadingScreen = (props: Props) => {
     </motion.div>
   );
 };
-
 
 export default LoadingScreen;
