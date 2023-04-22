@@ -1,10 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { routePaths } from "../../routes/routes";
 
 interface Props {}
 
 const Step1 = (props: Props) => {
+
+  console.log("Step1 rendered"); // add this line
+
+  const [state, setState] = useState({
+    ctype: "",
+    cdescription: "",
+    ctitle: "",
+    orgname: "",
+  });
+
+  //navigation
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+
+    const { ctype, cdescription, ctitle, orgname} = state;
+    console.log(state);
+
+    //add the navigation to the next page
+    navigate("/create-campaignStep2", { state });
+
+
+  }
   return (
     <div className="bg-[EFF4F8] text-black">
       <div className="container mx-auto p-8 flex flex-col md:flex-col lg:flex-row justify-center sm:gap-20 gap-12 items-center">
@@ -20,6 +44,7 @@ const Step1 = (props: Props) => {
             <span>Create your</span>{" "}
             <span className="text-[#00B5D5]">Campaign</span>
           </div>
+          <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-3">
             <span className="font-bold text-sm">Campaign Type</span>
             <select className="border border-black p-2 rounded-lg  outline-none ">
@@ -34,6 +59,8 @@ const Step1 = (props: Props) => {
               type="text"
               placeholder="Tell us more about your campaign"
               className="border border-[#0F0F0F] p-2 rounded-lg h-[124px] outline-none "
+              onChange={(e) => setState({ ...state, cdescription: e.target.value })}
+              //required
             />
           </div>
           <div className="flex flex-col gap-3">
@@ -42,6 +69,8 @@ const Step1 = (props: Props) => {
               type="text"
               placeholder="Name your amazing campaign"
               className="border border-[#0F0F0F] p-2 rounded-lg outline-none "
+              onChange={(e) => setState({ ...state, ctitle: e.target.value })}
+              //required
             />
           </div>
           <div className="flex flex-col gap-3">
@@ -50,15 +79,15 @@ const Step1 = (props: Props) => {
               type="text"
               placeholder="What is the name of your team?"
               className="border border-[#0F0F0F] p-2 rounded-lg outline-none "
+              onChange={(e) => setState({ ...state, orgname: e.target.value })}
             />
           </div>
           <div>
-            <Link to={routePaths.step2}>
-              <button className="text-[#00B5D5] w-full border hover:bg-[#00B5D5] hover:text-white border-[#00B5D5] bg-none p-3 rounded-md">
+            <button className="text-[#00B5D5] w-full border hover:bg-[#00B5D5] hover:text-white border-[#00B5D5] bg-none p-3 rounded-md" onSubmit={handleSubmit}>
                 Next
-              </button>
-            </Link>
+            </button>  
           </div>
+          </form>
         </div>
       </div>
     </div>

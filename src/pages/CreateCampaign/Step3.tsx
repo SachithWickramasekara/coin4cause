@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { routePaths } from '../../routes/routes';
 
 interface Props {
@@ -7,6 +7,34 @@ interface Props {
 }
 
 const Step3 = (props: Props) => {
+  console.log("Step3 rendered"); // add this line
+  const location = useLocation();
+  const { ctype, cdescription, ctitle, orgname, startdate, enddate} = location.state;
+
+
+  const [state, setState] = useState({
+    budget: "",
+    mindonation: "",
+    currency: "",
+
+    //display the user location, email, mobile make it so that the user cant edit
+
+  });
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+
+    const { budget, mindonation, currency} = state;
+    console.log(location.state);
+    console.log(state);
+
+    //add the navigation to the next page
+    navigate("/create-campaignStep4", {state});
+
+  }
+
     return (
       <div className="bg-[EFF4F8] text-black">
         <div className="container mx-auto p-8 flex flex-col md:flex-col lg:flex-row justify-center sm:gap-20 gap-12 items-center lg:">
@@ -22,12 +50,14 @@ const Step3 = (props: Props) => {
               <span>Create your</span>{" "}
               <span className="text-[#00B5D5]">Campaign</span>
             </div>
+            <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-3">
               <span className="font-bold text-sm">Amount planned to raise</span>
               <input
                 type="text"
                 placeholder="Start small or go big"
                 className="border border-[#0F0F0F] p-2 rounded-lg  outline-none w-full"
+                onChange={(e) => setState({ ...state, budget: e.target.value })}
               />
             </div>
             <div className="flex flex-col gap-3">
@@ -56,12 +86,11 @@ const Step3 = (props: Props) => {
               </div>
             </div>
             <div className='lg:pt-0 xl:pt-32'>
-              <Link to={routePaths.step4}>
-                <button className="text-[#00B5D5] w-full border hover:bg-[#00B5D5] hover:text-white border-[#00B5D5] bg-none p-3 rounded-md">
+              <button className="text-[#00B5D5] w-full border hover:bg-[#00B5D5] hover:text-white border-[#00B5D5] bg-none p-3 rounded-md" onSubmit={handleSubmit}>
                   Next
-                </button>
-              </Link>
+              </button>  
             </div>
+            </form>
           </div>
         </div>
       </div>
