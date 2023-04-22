@@ -7,6 +7,9 @@ const Step4 = (props: Props) => {
   console.log("Step4 rendered"); // add this line
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
 
+  const location = useLocation();
+  const { ctype, cdescription, ctitle, orgname, startdate, enddate, email, mobilenum, budget, mindonation, currency} = location.state;
+
   function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
     // get the selected files
     const files = event.target.files;
@@ -14,7 +17,7 @@ const Step4 = (props: Props) => {
     // set the selected files state
     setSelectedFiles(files);
   }
-
+/*
   function handleUpload() {
     // check if any files are selected
     if (selectedFiles && selectedFiles.length > 0) {
@@ -44,11 +47,39 @@ const Step4 = (props: Props) => {
       console.log('No files selected.');
     }
   }
-  
+  */
 
   const navigate = useNavigate();
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
+    fetch("https://coin4cause-server.vercel.app/create-campaign", {
+          method:"POST",
+          headers: {
+              "Content-Type": "application/json",
+              Accept:"application/json",
+              "Access-Control-Allow-Origin":"*"
+          },
+          body:JSON.stringify({
+              email,
+              ctype,
+              cdescription,
+              ctitle,
+              orgname,
+              startdate,
+              enddate,
+              mobilenum,
+              budget,
+              mindonation,
+              currency,
+      
+          }),
+          }).then((res)=>res.json())
+          .then((data) => {
+          console.log(data, "Campaign Created");
+          
+          })
+          alert("Campaign Created")
 
 
     //add the navigation to the next page
@@ -86,7 +117,7 @@ const Step4 = (props: Props) => {
           </div>
         )}
         <div className="w-3/5">
-          <button className="bg-none border border-[#00B5D5] text-[#00B5D5] w-full p-2 rounded-md hover:bg-[#00B5D5] hover:text-white" onClick={handleUpload}>
+          <button className="bg-none border border-[#00B5D5] text-[#00B5D5] w-full p-2 rounded-md hover:bg-[#00B5D5] hover:text-white" onClick={handleSubmit}>
             Next
           </button>
         </div>
