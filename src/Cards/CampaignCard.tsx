@@ -1,9 +1,41 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { CampaignCardDataType } from '../Constants/coin4causeTypes'
 
-
+interface CampaignCard {
+  _id: string;
+  email: string;
+  ctype: string;
+  cdescription: string;
+  ctitle: string;
+  orgname: string;
+  startdate: string;
+  enddate: string;
+  mobilenum: string;
+  budget: string;
+  mindonation: string;
+  currency: string;
+  Active: boolean;
+  __v: number;
+}
 
 const CampaignCard = ({data}:{data:CampaignCardDataType}) => {
+  const [campaigns, setCampaigns] = useState<CampaignCard[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get<CampaignCard[]>('https://coin4cause-server.vercel.app/campaigns');
+        console.log(response);
+        setCampaigns(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <div className="bg-[#EFF4F8] rounded-3xl flex flex-col items-center  px-4 text-center h-[501px] lg:w-[363px] justify-around py-4">
       <div>
@@ -26,6 +58,5 @@ const CampaignCard = ({data}:{data:CampaignCardDataType}) => {
   );
 }
 
-export default CampaignCard
+export default CampaignCard;
 
-//
