@@ -20,7 +20,8 @@ function Navbar() {
         <div className="container mx-auto flex flex-wrap px-20 py-5 flex-col md:flex-row items-center">
           <div className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
             <Link to={routePaths.home}>
-              <span className="ml-3 text-xl text-white">Coin4Cause</span>
+              {/* <span className="ml-3 text-xl text-white">Coin4Cause</span> */}
+              <img src="assets/icons/Logo.png" alt="logo" />
             </Link>
           </div>
           <div className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
