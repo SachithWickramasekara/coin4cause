@@ -13,6 +13,9 @@ import Step4 from "./pages/CreateCampaign/Step4";
 import StepDone from "./pages/CreateCampaign/StepDone";
 import { useState, useEffect } from "react";
 import LoadingScreen from "./pages/LoadingScreen";
+import Donate from "./pages/Donate";
+import { motion } from "framer-motion";
+import Footer from "./layout/Footer";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -25,11 +28,18 @@ function App() {
   }, []);
 
   if (loading) {
-    return <LoadingScreen/>;
+    return <LoadingScreen />;
   }
+
   return (
     <div className="App">
-      <Navbar />
+      <motion.nav
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Navbar />
+      </motion.nav>
       <Routes>
         <Route path={routePaths.home} element={<Landing />} />
         <Route path={routePaths.login} element={<Login />} />
@@ -47,11 +57,15 @@ function App() {
         <Route path={routePaths.step3} element={<Step3 />} />
         <Route path={routePaths.step4} element={<Step4 />} />
         <Route path={routePaths.done} element={<StepDone />} />
+        <Route path={routePaths.donate} element={<Donate />} />
       </Routes>
+      {window.location.pathname !== routePaths.login &&
+      window.location.pathname !== routePaths.signup &&
+      window.location.pathname !== routePaths.usernamepassword ? (
+        <Footer />
+      ) : null}
     </div>
   );
 }
 
 export default App;
-
-//

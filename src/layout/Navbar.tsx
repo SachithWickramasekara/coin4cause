@@ -16,7 +16,7 @@ function Navbar() {
 
   if (window.innerWidth > 820) {
     return (
-      <header className="text-white body-font bg-[#08415C]">
+      <header className="text-white  body-font bg-[#08415C]">
         <div className="container mx-auto flex flex-wrap px-20 py-5 flex-col md:flex-row items-center">
           <div className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
             <Link to={routePaths.home}>
@@ -25,16 +25,16 @@ function Navbar() {
             </Link>
           </div>
           <div className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-            <Link to={routePaths.about} className="mr-5 hover:text-gray-900">
+            <Link to={routePaths.about} className="mr-5 hover:text-gray-100">
               About
             </Link>
             <Link
               to={routePaths.campaings}
-              className="mr-5 hover:text-gray-900"
+              className="mr-5 hover:text-gray-100"
             >
               Campaigns
             </Link>
-            <Link to={routePaths.services} className="mr-5 hover:text-gray-900">
+            <Link to={routePaths.services} className="mr-5 hover:text-gray-100">
               Services
             </Link>
           </div>

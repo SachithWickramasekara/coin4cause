@@ -2,14 +2,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import { routePaths } from "../routes/routes";
 import { Link, useNavigate } from "react-router-dom";
 import Select, { ActionMeta, SingleValue } from "react-select";
-
+import { motion } from "framer-motion";
 
 interface Country {
   value: string;
   label: string;
   flag: string;
 }
-
 
 interface Age {
   value: string;
@@ -52,7 +51,7 @@ const SignUp = () => {
     navigate("../usernamepassword", { state });
   };
 
-  const agelist :Age[]= [
+  const agelist: Age[] = [
     { value: "18-25 years", label: "18-25 years" },
     { value: "26-35 years", label: "26-35 years" },
     { value: "36-45 years", label: "36-45 years" },
@@ -60,8 +59,6 @@ const SignUp = () => {
     { value: "56+ years", label: "56+ years" },
   ];
 
-
- 
   const [selectedAge, setSelectedAge] = useState<Age | null>(null);
 
   const handleAgeChange = (
@@ -73,7 +70,6 @@ const SignUp = () => {
 
   const [countryList, setCountryList] = useState<Country[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-
 
   useEffect(() => {
     fetch("https://restcountries.com/v2/all")
@@ -146,18 +142,74 @@ const SignUp = () => {
     }),
   };
 
+  const formVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const buttonVariants = {
+    hover: { scale: 1.1 },
+  };
+
   return (
-    <div className=" text-white h-screen body ">
+    <motion.div
+      className=" text-white h-screen body "
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 0.5 } }}
+    >
       <div className="flex flex-col justify-center items-center p-10 body">
-        <div className="circle w-52 h-52 rounded-full" />
-        <form
+        <motion.div
+          className="circle w-52 h-52 p-8 rounded-full"
+          animate={{
+            rotate: 360,
+            transition: { repeat: Infinity, duration: 2 },
+          }}
+        />
+        <motion.form
           onSubmit={handleSubmit}
           className="box relative bottom-40 flex flex-col gap-12 items-center p-10 rounded-3xl"
+          variants={formVariants}
+          initial="hidden"
+          animate="visible"
         >
-          <div className="text-center font-bold text-3xl">Sign Up</div>
-          <div className="flex flex-col gap-4">
-            <div className="flex sm:flex-row flex-col gap-4">
-              <div className="flex flex-col ">
+          <motion.div
+            className="text-center font-bold text-3xl"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.5, delay: 0.2 },
+            }}
+          >
+            Sign Up
+          </motion.div>
+          <motion.div
+            className="flex flex-col gap-4"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.5, delay: 0.4 },
+            }}
+          >
+            <motion.div
+              className="flex sm:flex-row flex-col gap-4"
+              initial={{ opacity: 0, y: -50 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.5, delay: 0.4 },
+              }}
+            >
+              <motion.div
+                className="flex flex-col "
+                initial={{ opacity: 0, y: -50 }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.5, delay: 0.4 },
+                }}
+              >
                 <label className="text-lg">First Name</label>
                 <input
                   type="text"
@@ -168,8 +220,16 @@ const SignUp = () => {
                   }
                   required
                 />
-              </div>
-              <div className="flex flex-col">
+              </motion.div>
+              <motion.div
+                className="flex flex-col"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                  transition: { duration: 0.5, delay: 0.6 },
+                }}
+              >
                 <label className="text-lg">Surname</label>
                 <input
                   type="text"
@@ -180,10 +240,18 @@ const SignUp = () => {
                   }
                   required
                 />
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
             <div className="flex sm:flex-row flex-col gap-4">
-              <div className="flex flex-col ">
+              <motion.div
+                className="flex flex-col "
+                initial={{ opacity: 0, x: 50 }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                  transition: { duration: 0.5, delay: 0.6 },
+                }}
+              >
                 <label className="text-lg">Email</label>
                 <input
                   type="email"
@@ -194,8 +262,16 @@ const SignUp = () => {
                   }
                   required
                 />
-              </div>
-              <div className="flex flex-col">
+              </motion.div>
+              <motion.div
+                className="flex flex-col"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                  transition: { duration: 0.5, delay: 0.6 },
+                }}
+              >
                 <label className="text-lg">Age Catergory</label>
                 <Select
                   options={agelist}
@@ -205,9 +281,17 @@ const SignUp = () => {
                   isSearchable
                   styles={customStyles}
                 />
-              </div>
+              </motion.div>
             </div>
-            <div className="flex sm:flex-row flex-col gap-4">
+            <motion.div
+              className="flex sm:flex-row flex-col gap-4"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{
+                opacity: 1,
+                x: 0,
+                transition: { duration: 0.5, delay: 0.6 },
+              }}
+            >
               <div className="flex flex-col">
                 <label className="text-lg">Country</label>
                 <Select
@@ -220,7 +304,15 @@ const SignUp = () => {
                   styles={customStyles}
                 />
               </div>
-              <div className="flex flex-col">
+              <motion.div
+                className="flex flex-col"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                  transition: { duration: 0.5, delay: 0.6 },
+                }}
+              >
                 <label className="text-lg">Mobile Number</label>
                 <input
                   type="text"
@@ -231,23 +323,35 @@ const SignUp = () => {
                   }
                   required
                 />
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
             <div className="py-5">
-              <button className="bg-[#FEAE0F] rounded-md px-20 py-2 flex mx-auto ">
+              <motion.button
+                className="bg-[#FEAE0F] rounded-md px-20 py-2 flex mx-auto "
+                variants={buttonVariants}
+                whileHover="hover"
+              >
                 Next
-              </button>
+              </motion.button>
             </div>
-            <div className="text-center text-sm pb-4">
-              <span>Already have an account? </span>
+            <motion.div
+              className="text-center text-sm pb-4"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.5, delay: 1 },
+              }}
+            >
+              <span >Already have an account? </span>
               <Link to={routePaths.login}>
                 <span className="font-bold cursor-pointer">Login</span>
               </Link>
-            </div>
-          </div>
-        </form>
+            </motion.div>
+          </motion.div>
+        </motion.form>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
