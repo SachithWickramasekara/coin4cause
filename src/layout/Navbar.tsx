@@ -14,7 +14,7 @@ function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  if (window.innerWidth >= 820) {
+  if (window.innerWidth > 820) {
     return (
       <header className="text-white body-font bg-[#08415C]">
         <div className="container mx-auto flex flex-wrap px-20 py-5 flex-col md:flex-row items-center">
@@ -63,7 +63,8 @@ function Navbar() {
         <div className="container mx-auto flex flex-wrap p-5 flex-row justify-between md:flex-row items-center">
           <div className="flex title-font font-medium items-center md:mb-0">
             <Link to={routePaths.home}>
-              <span className="ml-3 text-xl text-white">Coin4Cause</span>
+              {/* <span className="ml-3 text-xl text-white">Coin4Cause</span> */}
+              <img src="assets/icons/Logo.png" alt="logo" />
             </Link>
           </div>
           <button
@@ -100,7 +101,7 @@ function Navbar() {
         <nav
           className={`flex flex-col px-8 pb-8 text-white gap-4 transition duration-300 ${
             isMenuOpen ? "flex" : "hidden"
-          } md:flex`}
+          } `}
         >
           <Link to={routePaths.about} className="mr-5 hover:text-gray-900">
             About
@@ -110,6 +111,22 @@ function Navbar() {
           </Link>
           <Link to={routePaths.services} className="mr-5 hover:text-gray-900">
             Services
+          </Link>
+          <Link to={routePaths.login}>
+            <button className="inline-flex items-center bg-transparent border border-[#00B5D5] text-[#00B5D5] p-3 focus:outline-none hover:bg-white hover:text-[#00B5D5] rounded text-sm font-bold mt-4 md:mt-0">
+              Join the Community
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                className="w-4 h-4 ml-1"
+                viewBox="0 0 24 24"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </button>
           </Link>
         </nav>
       </header>
