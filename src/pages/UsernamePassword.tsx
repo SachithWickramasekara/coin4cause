@@ -88,12 +88,12 @@ const UsernamePassword = (props: Props) => {
 
 
   return (
-    <div className="body text-white overflow-y-hidden">
-      <div className="container mx-auto flex flex-col justify-center items-center py-20">
-        <div className="circle w-52 h-52  rounded-full"></div>
+    <div className="body text-white h-screen body py-20 overflow-y-hidden">
+      <div className="container mx-auto flex flex-col justify-center items-center ">
+        <div className="circle w-52 h-52  rounded-full" />
         <form
           onSubmit={handleSubmit}
-          className="box relative bottom-40 w-[480px] px-12"
+          className="box relative bottom-40 sm:w-[480px] px-12 rounded-3xl"
         >
           <div className="py-12 text-center font-bold text-3xl">Login</div>
           <div className="flex flex-col gap-8 ">
@@ -115,20 +115,21 @@ const UsernamePassword = (props: Props) => {
               type="password"
               name="ConfirmPassword"
               placeholder="ConfirmPassword"
-              onChange={(e) => setState({ ...state, confirmPassword: e.target.value })}
+              onChange={(e) =>
+                setState({ ...state, confirmPassword: e.target.value })
+              }
               className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
             />
-          <div className="py-5">
-            <button className="bg-[#FEAE0F] rounded-md px-20 py-2 flex mx-auto ">
-              Continue
-            </button>
-          </div>
-            
+            <div className="py-5">
+              <button className="bg-[#FEAE0F] rounded-md px-20 py-2 flex mx-auto ">
+                Continue
+              </button>
+            </div>
           </div>
         </form>
       </div>
     </div>
-  )
+  );
 }
 
 export default UsernamePassword

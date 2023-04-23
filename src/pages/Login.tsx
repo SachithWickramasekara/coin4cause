@@ -58,12 +58,12 @@ const Login = () => {
   };
   
   return (
-    <div className="body text-white overflow-y-hidden">
+    <div className="body h-screen text-white overflow-y-hidden">
       <div className="container mx-auto flex flex-col justify-center items-center py-20">
-        <div className="circle w-52 h-52  rounded-full"></div>
+        <div className="circle w-52 h-52  rounded-full"/>
         <form
           onSubmit={handleSubmit}
-          className="box relative bottom-40 w-[480px] px-12"
+          className="box relative bottom-40 w-[480px] px-12 rounded-3xl "
         >
           <div className="py-12 text-center font-bold text-3xl">Login</div>
           <div className="flex flex-col gap-8 px-8  sm:px-0">
