@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
 interface Props {}
 
 const Step4 = (props: Props) => {
+
   console.log("Step4 rendered"); // add this line
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+
+  const [base64, setBase64] = useState<string | undefined>();
 
   const location = useLocation();
   const {
@@ -22,47 +26,27 @@ const Step4 = (props: Props) => {
     currencies,
   } = location.state;
 
-  function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileSelect (event: React.ChangeEvent<HTMLInputElement>) {
     // get the selected files
     const files = event.target.files;
-
-    // set the selected files state
     setSelectedFiles(files);
-  }
-  /*
-  function handleUpload() {
-    // check if any files are selected
-    if (selectedFiles && selectedFiles.length > 0) {
-      // convert FileList to an array
-      const filesArray = Array.from(selectedFiles);
-  
-      // create a new XMLHttpRequest object
-      const xhr = new XMLHttpRequest();
-  
-      // set up the upload progress tracking
-      xhr.upload.addEventListener('progress', (event) => {
-        if (event.lengthComputable) {
-          const percentComplete = Math.round((event.loaded / event.total) * 100);
-          console.log(`Upload progress: ${percentComplete}%`);
-        }
-      });
-  
-      // send the files to the server
-      xhr.open('POST', '/upload');
-      const formData = new FormData();
-      filesArray.forEach((file) => {
-        formData.append('files', file);
-      });
-      xhr.send(formData);
-  
-    } else {
-      console.log('No files selected.');
+    console.log(files);
+    
+    if (!files) {
+      return;
     }
+  
+    const file = files[0];
+    const base64 = await convertToBase64(file);
+  
+    // set the selected files state
+    setBase64(base64);
   }
-  */
+
 
   const navigate = useNavigate();
   const handleSubmit = (e: { preventDefault: () => void }) => {
+    
     e.preventDefault();
 
     fetch("https://coin4cause-server.vercel.app/create-campaign", {
@@ -84,6 +68,7 @@ const Step4 = (props: Props) => {
         budget,
         mindonation,
         currencies,
+        base64,
       }),
     })
       .then((res) => res.json())
@@ -95,6 +80,7 @@ const Step4 = (props: Props) => {
     //add the navigation to the next page
     navigate("/done");
   };
+
 
   return (
     <div className="text-black">
@@ -122,7 +108,7 @@ const Step4 = (props: Props) => {
             </label>
             <input
               type="file"
-              accept="image/*"
+              accept="*"
               id="file-input"
               className="hidden"
               onChange={handleFileSelect}
@@ -156,7 +142,25 @@ const Step4 = (props: Props) => {
         </form>
       </div>
     </div>
-  );
+  ); 
 };
 
 export default Step4;
+
+
+function convertToBase64(file: Blob): Promise<string> {
+  if (!(file instanceof Blob)) {
+    throw new Error("File is not a valid Blob object");
+  }
+
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      resolve(fileReader.result as string)
+    };
+    fileReader.onerror = (error) => {
+      reject(error)
+    };
+    fileReader.readAsDataURL(file);
+  });
+}
