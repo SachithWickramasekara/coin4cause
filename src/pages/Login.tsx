@@ -1,12 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { routePaths } from "../routes/routes";
+import { motion } from "framer-motion";
 
-
-interface LoginProps {
-  onLogin: () => void;
-}
 
 const Login = () => {
   const responseMessage = (response: any) => {
@@ -57,22 +54,51 @@ const Login = () => {
     }
   };
   
+const formVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
+
+const buttonVariants = {
+  hover: { scale: 1.1 },
+};
+
   return (
-    <div className="body h-screen text-white overflow-y-hidden">
+    <motion.div
+      className="body h-screen text-white overflow-y-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 0.5 } }}
+    >
       <div className="container mx-auto flex flex-col justify-center items-center py-20">
-        <div className="circle w-52 h-52  rounded-full"/>
-        <form
+        <motion.div
+          className="circle w-52 h-52 p-8 rounded-full"
+          animate={{ rotate: 360, transition: { repeat: Infinity, duration: 2 } }}
+        />
+        <motion.form
           onSubmit={handleSubmit}
-          className="box relative bottom-40 w-[480px] px-12 rounded-3xl "
+          className="box relative bottom-40 sm:w-[480px] p-8 rounded-3xl"
+          variants={formVariants}
+          initial="hidden"
+          animate="visible"
         >
-          <div className="py-12 text-center font-bold text-3xl">Login</div>
-          <div className="flex flex-col gap-8 px-8  sm:px-0">
+          <motion.div
+            className="py-12 text-center font-bold text-3xl"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.2 } }}
+          >
+            Login
+          </motion.div>
+          <motion.div
+            className="flex flex-col gap-8 lg:px-8  sm:px-0"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.4 } }}
+          >
             <input
               type="text"
               name="Username"
               placeholder="Username"
               onChange={(e) => setState({ ...state, email: e.target.value })}
-              className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent "
+              className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
             />
             <input
               type="password"
@@ -81,28 +107,47 @@ const Login = () => {
               onChange={(e) => setState({ ...state, password: e.target.value })}
               className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
             />
-          </div>
-          <div className="flex justify-end py-4 text-sm font-normal px-8 sm:px-0">
+          </motion.div>
+          <motion.div
+            className="flex justify-end py-4 text-sm font-normal px-8 sm:px-0"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0, transition: { duration: 0.5, delay: 0.6 } }}
+          >
             Forgot Password?
-          </div>
-          <div className="py-5">
-            <button className="bg-[#FEAE0F] rounded-md px-20 py-2 flex mx-auto ">
+          </motion.div>
+          <motion.div
+            className="py-5"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.8 } }}
+          >
+            <motion.button
+              className="bg-[#FEAE0F] rounded-md px-20 py-2 flex mx-auto"
+              variants={buttonVariants}
+              whileHover="hover"
+            >
               Login
-            </button>
-          </div>
-          <div className="flex justify-center pb-4">
+            </motion.button>
+          </motion.div>
+          <motion.div
+            className="flex justify-center pb-4"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.5, delay: 1 } }}
+          >
             <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
-          </div>
-          <div className="text-center text-sm pb-4">
+          </motion.div>
+          <motion.div
+            className="text-center text-sm pb-4"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.5, delay: 1.2 } }}
+          >
             <span>Don’t have an account? </span>
             <Link to={routePaths.signup}>
               <span className="font-bold cursor-pointer">SIGN UP</span>
             </Link>
-          </div>
-          <div></div>
-        </form>
+          </motion.div>
+        </motion.form>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
