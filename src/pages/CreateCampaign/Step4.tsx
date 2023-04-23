@@ -19,7 +19,7 @@ const Step4 = (props: Props) => {
     mobilenum,
     budget,
     mindonation,
-    currency,
+    currencies,
   } = location.state;
 
   function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
@@ -83,7 +83,7 @@ const Step4 = (props: Props) => {
         mobilenum,
         budget,
         mindonation,
-        currency,
+        currencies,
       }),
     })
       .then((res) => res.json())

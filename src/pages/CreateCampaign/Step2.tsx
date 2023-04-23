@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { routePaths } from "../../routes/routes";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import type { DatePickerProps } from 'antd';
+import { DatePicker, Space } from 'antd';
+import dayjs from 'dayjs';
 
 interface Props {}
 
@@ -16,6 +19,7 @@ const Step2 = (props: Props) => {
     orgname: orgname,
     startdate: "",
     enddate: "",
+    country: "",
     email: "",
     mobilenum: "",
 
@@ -27,13 +31,24 @@ const Step2 = (props: Props) => {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    const { startdate, enddate, email, mobilenum } = state;
+    const { startdate, enddate, email, country, mobilenum } = state;
     console.log(location.state);
     console.log(state);
 
     //add the navigation to the next page
     navigate("/create-campaignStep3", { state });
   };
+
+  const onstartChange: DatePickerProps['onChange'] = (date: any, dateString: any) => {
+    setState({ ...state, startdate: date ? dayjs(date).format('YYYY-MM-DD') : '' });
+    console.log(date, dateString);
+  };
+  
+  const onChange: DatePickerProps['onChange'] = (date: any, dateString: any) => {
+    setState({ ...state, enddate: date ? dayjs(date).format('YYYY-MM-DD') : '' });
+    console.log(date, dateString);
+  };
+  
 
   return (
     <div className="bg-[EFF4F8] text-black">
@@ -54,22 +69,13 @@ const Step2 = (props: Props) => {
             <div className="flex flex-col gap-3">
               <span className="font-bold text-sm">Campaign Duration</span>
               <div className="flex flex-row w-full gap-5">
-                <input
-                  type="text"
-                  placeholder="Start Date"
-                  className="border border-[#0F0F0F] p-2 rounded-lg  outline-none w-full"
-                  onChange={(e) =>
-                    setState({ ...state, startdate: e.target.value })
-                  }
-                />
-                <input
-                  type="text"
-                  placeholder="End Date"
-                  className="border border-[#0F0F0F] p-2 rounded-lg  outline-none w-full"
-                  onChange={(e) =>
-                    setState({ ...state, enddate: e.target.value })
-                  }
-                />
+
+                <Space direction="vertical">
+                  <DatePicker onChange={onstartChange} />
+                </Space>
+                <Space direction="vertical">
+                  <DatePicker onChange={onChange} />
+                </Space>
               </div>
             </div>
             <div className="flex flex-col gap-3">
@@ -93,7 +99,7 @@ const Step2 = (props: Props) => {
               <span className="font-bold text-sm">Mobile</span>
               <input
                 type="text"
-                placeholder=""
+                placeholder="+94 77 845 xx79"
                 className="border border-[#0F0F0F] p-2 rounded-lg outline-none "
                 onChange={(e) =>
                   setState({ ...state, mobilenum: e.target.value })

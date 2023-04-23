@@ -7,13 +7,21 @@ interface Props {}
 const Step3 = (props: Props) => {
   console.log("Step3 rendered"); // add this line
   const location = useLocation();
-  const { ctype, cdescription, ctitle, orgname, startdate, enddate } =
-    location.state;
+  const { email, ctype, cdescription, ctitle, orgname, startdate, enddate, country, mobilenum } = location.state;
 
   const [state, setState] = useState({
+    ctype: ctype,
+    cdescription: cdescription,
+    ctitle: ctitle,
+    orgname: orgname,
+    startdate: startdate,
+    enddate: enddate,
+    country: country,
+    email: email,
+    mobilenum: mobilenum,
     budget: "",
     mindonation: "",
-    currency: "",
+    currencies: [] as string[], // store selected currencies in an array
 
     //display the user location, email, mobile make it so that the user cant edit
   });
@@ -23,7 +31,7 @@ const Step3 = (props: Props) => {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    const { budget, mindonation, currency } = state;
+    const { budget, mindonation, currencies } = state; // update variable name
     console.log(location.state);
     console.log(state);
 
@@ -31,6 +39,19 @@ const Step3 = (props: Props) => {
     navigate("/create-campaignStep4", { state });
   };
 
+  //button
+  const [selectedButtons, setSelectedButtons] = useState<string[]>([]);
+  const buttonClick = (currency: string, buttonRef: HTMLInputElement | null) => {
+    if (selectedButtons.includes(currency)) {
+      buttonRef?.classList.remove("bg-blue-500", "text-white");
+      setSelectedButtons(selectedButtons.filter((name) => name !== currency));
+      setState({ ...state, currencies: state.currencies.filter((name) => name !== currency) });
+    } else {
+      buttonRef?.classList.add("bg-blue-500", "text-white");
+      setSelectedButtons([...selectedButtons, currency]);
+      setState({ ...state, currencies: [...state.currencies, currency] });
+    }
+  };
   return (
     <div className="bg-[EFF4F8] text-black">
       <div className="container mx-auto p-8 flex flex-col md:flex-col lg:flex-row justify-center sm:gap-20 gap-12 items-center lg:">
@@ -58,10 +79,13 @@ const Step3 = (props: Props) => {
             </div>
             <div className="flex flex-col gap-3">
               <span className="font-bold text-sm">Minimum donation amount</span>
-              <select className="border border-black p-2 rounded-lg  outline-none ">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
+              <select className="border border-black p-2 rounded-lg  outline-none " onChange={(e): void =>setState({ ...state, mindonation: e.target.value })}>
+                <option value="0">0$</option>
+                <option value="1">1$</option>
+                <option value="5">5$</option>
+                <option value="10">10$</option>
+                <option value="50">50$</option>
+              
               </select>
             </div>
             <div className="flex flex-col gap-3">
@@ -72,12 +96,14 @@ const Step3 = (props: Props) => {
                   placeholder="Start Date"
                   className="border border-[#0F0F0F] p-2 rounded-lg  outline-none w-full"
                   value="Major Currencies"
+                  onClick={(e) => buttonClick("Major Currencies", e.currentTarget)}
                 />
                 <input
                   type="button"
                   placeholder="End Date"
                   className="border border-[#0F0F0F] p-2 rounded-lg  outline-none w-full"
                   value="Cryptocurrencies"
+                  onClick={(e) => buttonClick("Cryptocurrencies", e.currentTarget)}
                 />
               </div>
             </div>

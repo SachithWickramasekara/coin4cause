@@ -44,7 +44,7 @@ const Step1 = (props: Props) => {
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-3">
               <span className="font-bold text-sm">Campaign Type</span>
-              <select className="border border-black p-2 rounded-lg  outline-none ">
+              <select className="border border-black p-2 rounded-lg  outline-none " onChange={(e): void =>setState({ ...state, ctype: e.target.value })}>
                 <option value="volvo">Volvo</option>
                 <option value="saab">Saab</option>
                 <option value="mercedes">Mercedes</option>
