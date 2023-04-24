@@ -35,7 +35,7 @@ function Navbar() {
               Campaigns
             </Link>
             <Link to={routePaths.contactUS} className="mr-5 hover:text-gray-100">
-              Services
+              Contact
             </Link>
           </div>
           <Link to={routePaths.login}>
@@ -110,7 +110,7 @@ function Navbar() {
             Campaigns
           </Link>
           <Link to={routePaths.contactUS} className="mr-5 hover:text-gray-900">
-            Services
+            Contact
           </Link>
           <Link to={routePaths.login}>
             <button className="inline-flex items-center bg-transparent border border-[#00B5D5] text-[#00B5D5] p-3 focus:outline-none hover:bg-white hover:text-[#00B5D5] rounded text-sm font-bold mt-4 md:mt-0">
