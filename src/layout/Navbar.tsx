@@ -34,7 +34,10 @@ function Navbar() {
             >
               Campaigns
             </Link>
-            <Link to={routePaths.contactUS} className="mr-5 hover:text-gray-100">
+            <Link
+              to={routePaths.contactUS}
+              className="mr-5 hover:text-gray-100"
+            >
               Contact
             </Link>
           </div>
@@ -44,9 +47,9 @@ function Navbar() {
               <svg
                 fill="none"
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 className="w-4 h-4 ml-1"
                 viewBox="0 0 24 24"
               >
@@ -118,9 +121,9 @@ function Navbar() {
               <svg
                 fill="none"
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 className="w-4 h-4 ml-1"
                 viewBox="0 0 24 24"
               >
