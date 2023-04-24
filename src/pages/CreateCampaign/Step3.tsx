@@ -75,6 +75,7 @@ const Step3 = (props: Props) => {
                 placeholder="Start small or go big"
                 className="border border-[#0F0F0F] p-2 rounded-lg  outline-none w-full"
                 onChange={(e) => setState({ ...state, budget: e.target.value })}
+                required
               />
             </div>
             <div className="flex flex-col gap-3">

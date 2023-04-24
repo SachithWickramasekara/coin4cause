@@ -18,6 +18,8 @@ interface Campaign {
   Active: boolean;
   __v: number;
   base64: string,
+  id: string,
+  financedocs: string,
 }
 
 function CampaignsCard() {

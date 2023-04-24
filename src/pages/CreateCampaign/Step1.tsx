@@ -73,7 +73,7 @@ const Step1 = (props: Props) => {
                 onChange={(e) =>
                   setState({ ...state, cdescription: e.target.value })
                 }
-                //required
+                required
               />
             </div>
             <div className="flex flex-col gap-3">
@@ -83,7 +83,7 @@ const Step1 = (props: Props) => {
                 placeholder="Name your amazing campaign"
                 className="border border-[#0F0F0F] p-2 rounded-lg outline-none "
                 onChange={(e) => setState({ ...state, ctitle: e.target.value })}
-                //required
+                required
               />
             </div>
             <div className="flex flex-col gap-3">

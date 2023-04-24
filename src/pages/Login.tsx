@@ -96,9 +96,10 @@ const buttonVariants = {
             <input
               type="text"
               name="Username"
-              placeholder="Username"
+              placeholder="email"
               onChange={(e) => setState({ ...state, email: e.target.value })}
               className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+              required
             />
             <input
               type="password"
@@ -106,6 +107,7 @@ const buttonVariants = {
               placeholder="Password"
               onChange={(e) => setState({ ...state, password: e.target.value })}
               className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+              required
             />
           </motion.div>
           <motion.div

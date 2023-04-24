@@ -120,6 +120,7 @@ const handleSubmit = (e: { preventDefault: () => void }) => {
                 placeholder="yourname@example.com"
                 className="border border-[#0F0F0F] p-2 rounded-lg outline-none "
                 onChange={(e) => setState({ ...state, email: e.target.value })}
+                required
               />
             </div>
             <div className="flex flex-col gap-3">
@@ -131,6 +132,7 @@ const handleSubmit = (e: { preventDefault: () => void }) => {
                 onChange={(e) =>
                   setState({ ...state, mobilenum: e.target.value })
                 }
+                required
               />
             </div>
             <div>
