@@ -1,0 +1,8 @@
+body{
+    font-family: 'Satoshi-Regular';
+}
+
+.about-hero{
+    background-image: url("../../../public/assets/images/aboutHeroBg.png");
+}
+
