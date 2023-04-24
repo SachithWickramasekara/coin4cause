@@ -1,7 +1,7 @@
 import Campaign from "./Campaign";
 import Landing from "./Landing";
 import About from "./About";
-import Services from "./Services";
+import ContactUs from "./ContactUs";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import UsernamePassword from "./UsernamePassword";
@@ -13,7 +13,7 @@ export {
   Campaign,
   About,
   Landing,
-  Services,
+  ContactUs,
   Login,
   SignUp,
   UsernamePassword,

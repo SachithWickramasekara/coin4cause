@@ -34,7 +34,7 @@ function Navbar() {
             >
               Campaigns
             </Link>
-            <Link to={routePaths.services} className="mr-5 hover:text-gray-100">
+            <Link to={routePaths.contactUS} className="mr-5 hover:text-gray-100">
               Services
             </Link>
           </div>
@@ -109,7 +109,7 @@ function Navbar() {
           <Link to={routePaths.campaings} className="mr-5 hover:text-gray-900">
             Campaigns
           </Link>
-          <Link to={routePaths.services} className="mr-5 hover:text-gray-900">
+          <Link to={routePaths.contactUS} className="mr-5 hover:text-gray-900">
             Services
           </Link>
           <Link to={routePaths.login}>
