@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
+import { routePaths } from '../../routes/routes';
 
 type Props = {}
 
@@ -18,9 +20,11 @@ const StepDone = (props: Props) => {
           <div className="text-[#6C6C6C] text-sm font-normal">
             View your Campaign Live by clicking the button below.
           </div>
-          <button className="text-[#00B5D5] bg-none border border-[#00B5D5] p-2 rounded-sm hover:bg-[#00B5D5] hover:text-white">
-            View Campaign
-          </button>
+          <Link to={routePaths.campaings}>
+            <button className="text-[#00B5D5] bg-none border border-[#00B5D5] p-2 rounded-sm hover:bg-[#00B5D5] hover:text-white">
+              View Campaign
+            </button>
+          </Link>
         </div>
       </div>
     </div>
