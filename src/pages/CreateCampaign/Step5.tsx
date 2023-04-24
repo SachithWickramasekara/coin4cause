@@ -69,23 +69,6 @@ const Step5 = (props: Props) => {
             </button>
           </div>
         </div>
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
-          <div className="border border-dashed border-black p-20 rounded-md hover:bg-gray-100 w-4/5 flex mx-auto justify-center group">
-            <label
-              htmlFor="file-input"
-              className="bg-none border border-[#00B5D5] text-[#00B5D5] px-3 py-1 rounded-md group-hover:bg-[#00B5D5] group-hover:text-white cursor-pointer"
-            >
-              Upload
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              id="file-input"
-              className="hidden"
-              multiple
-            />
-          </div>
-        </div> */}
         <div className="flex justify-center items-center">
           <Link to={routePaths.done}>
             <button className="bg-none border border-[#00B5D5] text-[#00B5D5] p-2 rounded-md hover:bg-[#00B5D5] hover:text-white w-2/5">
