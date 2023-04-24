@@ -9,7 +9,6 @@ import EmailVerify from "./EmailVerify";
 import LoadingScreen from "./LoadingScreen";
 import Donate from "./Donate";
 
-
 export {
   Campaign,
   About,
@@ -20,5 +19,5 @@ export {
   UsernamePassword,
   EmailVerify,
   LoadingScreen,
-  Donate
+  Donate,
 };
