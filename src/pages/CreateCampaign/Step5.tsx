@@ -1,10 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { routePaths } from "../../routes/routes";
 
 type Props = {};
 
 const Step5 = (props: Props) => {
+
+  const location = useLocation();
+
+  const { ctype, cdescription,ctitle,orgname,startdate,enddate,email,country,mobilenum,budget,mindonation,currencies} = location.state;
   return (
     <div className="bg-[#EFF4F8]">
       <div className="container mx-auto sm:p-20 p-10 flex flex-col gap-20">

@@ -109,9 +109,12 @@ const Login = () => {
             <input
               type="text"
               name="Username"
-              placeholder="Email"
+
+              
+              placeholder="email"
               onChange={(e) => setState({ ...state, email: e.target.value })}
-              className="w-full outline-none border placeholder:text-gray-300 p-3 border-white rounded-md bg-transparent text-white"
+              className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+
               required
             />
             <input
@@ -120,7 +123,9 @@ const Login = () => {
               placeholder="Password"
               minLength={6}
               onChange={(e) => setState({ ...state, password: e.target.value })}
+
               className="w-full outline-none border placeholder:text-gray-300 p-3 border-white rounded-md bg-transparent text-white"
+
               required
             />
           </motion.div>
