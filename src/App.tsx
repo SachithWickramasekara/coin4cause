@@ -1,19 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./layout/Navbar";
-import { Landing, About, Campaign, Services } from "./pages/Index";
+import { Landing, About, Campaign, Services,Login,SignUp,UsernamePassword,EmailVerify,LoadingScreen ,Donate} from "./pages/Index";
 import { routePaths } from "./routes/routes";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import UsernamePassword from "./pages/UsernamePassword";
-import EmailVerify from "./pages/EmailVerify";
-import Step1 from "./pages/CreateCampaign/Step1";
-import Step2 from "./pages/CreateCampaign/Step2";
-import Step3 from "./pages/CreateCampaign/Step3";
-import Step4 from "./pages/CreateCampaign/Step4";
-import StepDone from "./pages/CreateCampaign/StepDone";
+import {Step1,Step2,Step3,Step4,Step5,StepDone} from './pages/CreateCampaign/Index'
 import { useState, useEffect } from "react";
-import LoadingScreen from "./pages/LoadingScreen";
-import Donate from "./pages/Donate";
 import { motion } from "framer-motion";
 import Footer from "./layout/Footer";
 
@@ -24,7 +14,7 @@ function App() {
     // Simulate loading delay with setTimeout
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 4000);
   }, []);
 
   if (loading) {
@@ -56,6 +46,7 @@ function App() {
         <Route path={routePaths.step2} element={<Step2 />} />
         <Route path={routePaths.step3} element={<Step3 />} />
         <Route path={routePaths.step4} element={<Step4 />} />
+        <Route path={routePaths.step5} element={<Step5 />} />
         <Route path={routePaths.done} element={<StepDone />} />
         <Route path={routePaths.donate} element={<Donate />} />
       </Routes>

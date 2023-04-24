@@ -30,6 +30,7 @@ const Step4 = (props: Props) => {
     // get the selected files
     const files = event.target.files;
     setSelectedFiles(files);
+
     console.log(files);
     
     if (!files) {
@@ -42,6 +43,7 @@ const Step4 = (props: Props) => {
     // set the selected files state
     setBase64(base64);
   }
+
 
 
   const navigate = useNavigate();
@@ -75,10 +77,10 @@ const Step4 = (props: Props) => {
       .then((data) => {
         console.log(data, "Campaign Created");
       });
-    alert("Campaign Created");
+   // alert("Campaign Created");
 
     //add the navigation to the next page
-    navigate("/done");
+    navigate("/create-campaignStep5");
   };
 
 

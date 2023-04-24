@@ -11,6 +11,7 @@ export const routePaths = {
   step2: "/create-campaignStep2",
   step3: "/create-campaignStep3",
   step4: "/create-campaignStep4",
+  step5:"/create-campaignStep5",
   done:"/done",
   donate:"/donate",
 };

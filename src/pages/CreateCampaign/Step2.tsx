@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { routePaths } from "../../routes/routes";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import type { DatePickerProps } from 'antd';
-import { DatePicker, Space } from 'antd';
-import dayjs from 'dayjs';
+import type { DatePickerProps } from "antd";
+import { DatePicker, Space } from "antd";
+import dayjs from "dayjs";
 
 interface Props {}
 
@@ -28,27 +28,55 @@ const Step2 = (props: Props) => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  // const handleSubmit = (e: { preventDefault: () => void }) => {
+  //   e.preventDefault();
+
+  //   const { startdate, enddate, email, country, mobilenum } = state;
+  //   console.log(location.state);
+  //   console.log(state);
+
+  //   if (!ctype || !cdescription || !ctitle || !orgname) {
+  //     alert("Please fill out all fields");
+  //     return;
+  //   }
+const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     const { startdate, enddate, email, country, mobilenum } = state;
-    console.log(location.state);
+
+    // Check if any of the input fields are empty
+    // if (!startdate || !enddate || !email || !country || !mobilenum) {
+    //   console.log("Please fill out all fields");
+    //   return;
+    // }
+
     console.log(state);
 
-    //add the navigation to the next page
+    // add the navigation to the next page
     navigate("/create-campaignStep3", { state });
   };
+    
+  const onstartChange: DatePickerProps["onChange"] = (
+    date: any,
+    dateString: any
+  ) => {
+    setState({
+      ...state,
+      startdate: date ? dayjs(date).format("YYYY-MM-DD") : "",
+    });
+    console.log(date, dateString);
+  };
 
-  const onstartChange: DatePickerProps['onChange'] = (date: any, dateString: any) => {
-    setState({ ...state, startdate: date ? dayjs(date).format('YYYY-MM-DD') : '' });
+  const onChange: DatePickerProps["onChange"] = (
+    date: any,
+    dateString: any
+  ) => {
+    setState({
+      ...state,
+      enddate: date ? dayjs(date).format("YYYY-MM-DD") : "",
+    });
     console.log(date, dateString);
   };
-  
-  const onChange: DatePickerProps['onChange'] = (date: any, dateString: any) => {
-    setState({ ...state, enddate: date ? dayjs(date).format('YYYY-MM-DD') : '' });
-    console.log(date, dateString);
-  };
-  
 
   return (
     <div className="bg-[EFF4F8] text-black">
@@ -69,7 +97,6 @@ const Step2 = (props: Props) => {
             <div className="flex flex-col gap-3">
               <span className="font-bold text-sm">Campaign Duration</span>
               <div className="flex flex-row w-full gap-5">
-
                 <Space direction="vertical">
                   <DatePicker onChange={onstartChange} />
                 </Space>
@@ -81,9 +108,9 @@ const Step2 = (props: Props) => {
             <div className="flex flex-col gap-3">
               <span className="font-bold text-sm">Location</span>
               <select className="border border-black p-2 rounded-lg  outline-none ">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
+                <option value="Asia">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="Australia">Australia</option>
               </select>
             </div>
             <div className="flex flex-col gap-3">
