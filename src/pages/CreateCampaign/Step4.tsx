@@ -29,37 +29,7 @@ const Step4 = (props: Props) => {
     // set the selected files state
     setSelectedFiles(files);
   }
-  /*
-  function handleUpload() {
-    // check if any files are selected
-    if (selectedFiles && selectedFiles.length > 0) {
-      // convert FileList to an array
-      const filesArray = Array.from(selectedFiles);
   
-      // create a new XMLHttpRequest object
-      const xhr = new XMLHttpRequest();
-  
-      // set up the upload progress tracking
-      xhr.upload.addEventListener('progress', (event) => {
-        if (event.lengthComputable) {
-          const percentComplete = Math.round((event.loaded / event.total) * 100);
-          console.log(`Upload progress: ${percentComplete}%`);
-        }
-      });
-  
-      // send the files to the server
-      xhr.open('POST', '/upload');
-      const formData = new FormData();
-      filesArray.forEach((file) => {
-        formData.append('files', file);
-      });
-      xhr.send(formData);
-  
-    } else {
-      console.log('No files selected.');
-    }
-  }
-  */
 
   const navigate = useNavigate();
   const handleSubmit = (e: { preventDefault: () => void }) => {
@@ -90,10 +60,10 @@ const Step4 = (props: Props) => {
       .then((data) => {
         console.log(data, "Campaign Created");
       });
-    alert("Campaign Created");
+   // alert("Campaign Created");
 
     //add the navigation to the next page
-    navigate("/done");
+    navigate("/create-campaignStep5");
   };
 
   return (

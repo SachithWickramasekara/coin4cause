@@ -6,7 +6,7 @@ import { offercardData } from "../../Constants/coin4causeData";
 const LandingOffer = () => {
   return (
     <div data-aos="fade-up" data-aos-duration="3000">
-      <div className="container mx-auto flex-col gap-4 justify-center items-center px-8 ">
+      <div className="container mx-auto flex-col gap-4 justify-center items-center p-8 ">
         <div className="text-[#00B5D5] font-medium text-sm flex mx-auto justify-center items-center">
           WHAT WE OFFER
         </div>

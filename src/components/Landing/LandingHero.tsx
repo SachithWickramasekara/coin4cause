@@ -95,7 +95,7 @@ const LandingHero = (props: Props) => {
                 Start a Campaign
               </motion.button>
             </Link>
-            <Link to={routePaths.donate}>
+            <Link to={routePaths.campaings}>
               <motion.button
                 className="bg-none text-[#00B5D5] p-2 rounded-md hover:bg-[#00B5D5] hover:text-white border border-[#00B5D5] w-full lg:w-auto"
                 whileHover={{ scale: 1.1 }}
