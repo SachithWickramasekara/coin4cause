@@ -1,1 +1,1 @@
-<img src="path/to/image.png">
+<img src="path/to/Screenshot (237).png">
