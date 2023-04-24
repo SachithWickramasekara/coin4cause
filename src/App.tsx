@@ -1,11 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./layout/Navbar";
-import { Landing, About, Campaign, Services,Login,SignUp,UsernamePassword,EmailVerify,LoadingScreen ,Donate} from "./pages/Index";
+import { Landing, About, Campaign,Login,SignUp,UsernamePassword,EmailVerify,LoadingScreen ,Donate ,ContactUs} from "./pages/Index";
 import { routePaths } from "./routes/routes";
 import {Step1,Step2,Step3,Step4,Step5,StepDone} from './pages/CreateCampaign/Index'
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Footer from "./layout/Footer";
+
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -41,7 +42,7 @@ function App() {
         <Route path={routePaths.emailverify} element={<EmailVerify />} />
         <Route path={routePaths.campaings} element={<Campaign />} />
         <Route path={routePaths.about} element={<About />} />
-        <Route path={routePaths.services} element={<Services />} />
+        <Route path={routePaths.contactUS} element={<ContactUs />} />
         <Route path={routePaths.step1} element={<Step1 />} />
         <Route path={routePaths.step2} element={<Step2 />} />
         <Route path={routePaths.step3} element={<Step3 />} />
