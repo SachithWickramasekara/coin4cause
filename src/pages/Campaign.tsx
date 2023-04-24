@@ -56,7 +56,7 @@ function CampaignsCard() {
               key={campaign._id}
               className=" text-center bg-[#EFF4F8] p-20 rounded-xl flex flex-col gap-3"
             >
-              <img src={campaign.base64}></img>
+              <img src={campaign.base64} alt={campaign.ctitle}></img>
               <div className="text-xl font-bold">{campaign.ctitle}</div>
               <div className="text-center font-normal text-base">
                 {campaign.cdescription}
