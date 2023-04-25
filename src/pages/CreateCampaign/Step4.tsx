@@ -20,11 +20,29 @@ const Step4 = (props: Props) => {
     startdate,
     enddate,
     email,
+    country,
     mobilenum,
     budget,
     mindonation,
     currencies,
   } = location.state;
+
+  const [state, setState] = useState({
+    ctype: ctype,
+    cdescription: cdescription,
+    ctitle: ctitle,
+    orgname: orgname,
+    startdate: startdate,
+    enddate: enddate,
+    country: country,
+    email: email,
+    mobilenum: mobilenum,
+    budget: "",
+    mindonation: "",
+    currencies: [] as string[], // store selected currencies in an array
+
+    //display the user location, email, mobile make it so that the user cant edit
+  });
 
   async function handleFileSelect (event: React.ChangeEvent<HTMLInputElement>) {
     // get the selected files
@@ -80,7 +98,7 @@ const Step4 = (props: Props) => {
    // alert("Campaign Created");
 
     //add the navigation to the next page
-    navigate("/create-campaignStep5");
+    navigate("/create-campaignStep5", {state});
   };
 
 

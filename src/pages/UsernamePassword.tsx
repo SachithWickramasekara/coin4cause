@@ -71,15 +71,6 @@ const UsernamePassword = (props: Props) => {
     } else {
       console.log("Passwords Does not match");
     }
-
-    const formVariants = {
-      hidden: { opacity: 0, y: 50 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-    };
-
-    const buttonVariants = {
-      hover: { scale: 1.1 },
-    };
   };
   const formVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -119,7 +110,7 @@ const UsernamePassword = (props: Props) => {
               transition: { duration: 0.5, delay: 0.2 },
             }}
           >
-            Login
+            Sign Up
           </motion.div>
           <motion.div
             className="flex flex-col gap-8 "
@@ -135,14 +126,16 @@ const UsernamePassword = (props: Props) => {
               name="Username"
               placeholder="Username"
               onChange={(e) => setState({ ...state, username: e.target.value })}
-              className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+              className="w-full outline-none border placeholder:text-gray-300 text-white p-3 border-white rounded-md bg-transparent"
+              required
             />
             <input
               type="password"
               name="Password"
               placeholder="Password"
               onChange={(e) => setState({ ...state, password: e.target.value })}
-              className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+              className="w-full outline-none border placeholder:text-gray-300 text-white p-3 border-white rounded-md bg-transparent"
+              required
             />
             <input
               type="password"
@@ -151,7 +144,8 @@ const UsernamePassword = (props: Props) => {
               onChange={(e) =>
                 setState({ ...state, confirmPassword: e.target.value })
               }
-              className="w-full outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+              className="w-full outline-none border placeholder:text-gray-300 text-white p-3 border-white rounded-md bg-transparent"
+              required
             />
             <div className="py-5">
               <motion.button

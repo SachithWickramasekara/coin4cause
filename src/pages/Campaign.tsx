@@ -18,6 +18,8 @@ interface Campaign {
   Active: boolean;
   __v: number;
   base64: string;
+  id: string,
+  financedocs: string,
 }
 
 function CampaignsCard() {
@@ -58,7 +60,13 @@ function CampaignsCard() {
               key={campaign._id}
               className=" text-center bg-[#EFF4F8] p-20 rounded-xl flex flex-col gap-3"
             >
-              <img src={campaign.base64} alt={campaign.ctitle}></img>
+              <div className="h-[200px] lg:h-[170px] md:h-[220px]">
+                <img
+                  src={campaign.base64}
+                  alt={campaign.ctitle}
+                  className="h-full w-full object-cover"
+                />
+              </div>
               <div className="text-xl font-bold">{campaign.ctitle}</div>
               <div className="text-center font-normal text-base">
                 {campaign.cdescription}

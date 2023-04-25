@@ -1,75 +1,57 @@
 import React, { useState } from "react";
 
+import { Link, useNavigate } from "react-router-dom";
+
 interface Props {}
 
-interface FormValues {
-  firstName: string;
-  lastName: string;
-  email: string;
-  message: string;
-}
-
-interface FormErrors {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  message?: string;
-}
 
 const ContactUs = (props: Props) => {
-  const [formData, setFormData] = useState<FormValues>({
-    firstName: "",
-    lastName: "",
+
+  const [state, setState] = useState({
+    fname: "",
+    lname: "",
     email: "",
     message: "",
   });
 
-  const [formErrors, setFormErrors] = useState<FormErrors>({});
+  const navigate = useNavigate();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    const { fname, lname, email, message } = state;
+  
+    try {
+      const response = await fetch("https://coin4cause-server.vercel.app/contact-us", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          fname,
+          lname,
+          email,
+          message,
+        }),
+      });
+  
+      const data = await response.json();
+      if (data.status === "ok") {
+        // Store the JWT token in localStorage or session storage
+        localStorage.setItem("token", data.token);
+        // Redirect to the home page
+        
+      } else {
+        alert("Message sent to the developers ");
+
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong");
+    }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const errors: FormErrors = {};
-
-    if (!formData.firstName.trim()) {
-      errors.firstName = "Please enter your first name";
-    }
-
-    if (!formData.lastName.trim()) {
-      errors.lastName = "Please enter your last name";
-    }
-
-    if (!formData.email.trim()) {
-      errors.email = "Please enter your email";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errors.email = "Please enter a valid email";
-    }
-
-    if (!formData.message.trim()) {
-      errors.message = "Please enter a message";
-    }
-
-    if (Object.keys(errors).length) {
-      setFormErrors(errors);
-      return;
-    }
-
-    // TODO: Handle form submission
-    console.log(formData);
-
-    // Clear form data
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      message: "",
-    });
-    setFormErrors({});
-  };
   return (
     <div>
       <div className="container mx-auto text-center sm:p-20 p-8 flex flex-col gap-8">
@@ -90,14 +72,9 @@ const ContactUs = (props: Props) => {
                       placeholder="First Name"
                       className="w-full h-[55px] rounded-lg px-4 border border-[#08415C] placeholder:text-[#08415C] bg-transparent"
                       name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
+                      onChange={(e) => setState({ ...state, fname: e.target.value })}
+                      required
                     />
-                    {formErrors.firstName && (
-                      <div className="text-red-500 text-left">
-                        {formErrors.firstName}
-                      </div>
-                    )}
                   </div>
                   <div className="w-full flex flex-col">
                     <input
@@ -105,14 +82,10 @@ const ContactUs = (props: Props) => {
                       placeholder="Last Name"
                       className="w-full h-[55px] rounded-lg px-4 border border-[#08415C] bg-transparent placeholder:text-[#08415C]"
                       name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
+                      onChange={(e) => setState({ ...state, lname: e.target.value })}
+                      required
                     />
-                    {formErrors.lastName && (
-                      <div className="text-red-500 text-left">
-                        {formErrors.lastName}
-                      </div>
-                    )}
+
                   </div>
                 </div>
                 <div className="lg:py-4 pt-2 pb-4 flex justify-center items-center">
@@ -122,14 +95,10 @@ const ContactUs = (props: Props) => {
                       placeholder="Email"
                       className="w-full h-[55px] rounded-lg px-4 border border-[#08415C] bg-transparent placeholder:text-[#08415C]"
                       name="message"
-                      value={formData.email}
-                      onChange={handleChange}
+                      onChange={(e) => setState({ ...state, email: e.target.value })}
+                      required
                     />
-                    {formErrors.email && (
-                      <div className="text-red-500 text-left">
-                        {formErrors.email}
-                      </div>
-                    )}
+
                   </div>
                 </div>
                 <div className=" lg:py-4 pt-2 pb-4 flex justify-center items-center">
@@ -139,14 +108,10 @@ const ContactUs = (props: Props) => {
                       placeholder="Message"
                       className="w-full h-[96px] rounded-lg px-4 border border-[#08415C] bg-transparent placeholder:text-[#08415C]"
                       name="message"
-                      value={formData.message}
-                      onChange={handleChange}
+                      onChange={(e) => setState({ ...state, message: e.target.value })}
+                      required
                     />
-                    {formErrors.message && (
-                      <div className="text-red-500 text-left">
-                        {formErrors.message}
-                      </div>
-                    )}
+
                   </div>
                 </div>
                 <div className="flex mx-auto justify-center lg:items-start   items-center">

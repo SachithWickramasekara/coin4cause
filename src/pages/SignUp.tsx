@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { routePaths } from "../routes/routes";
 import { Link, useNavigate } from "react-router-dom";
 import Select, { ActionMeta, SingleValue } from "react-select";
@@ -16,13 +16,6 @@ interface Age {
 }
 
 const SignUp = () => {
-  const responseMessage = (response: any) => {
-    console.log(response);
-    navigate("../hometemp");
-  };
-  const errorMessage = (error: any) => {
-    console.log(error);
-  };
 
   const [state, setState] = useState({
     fname: "",
@@ -151,6 +144,20 @@ const SignUp = () => {
     hover: { scale: 1.1 },
   };
 
+const getOptionLabel = (option: Country) => (
+  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+    <img
+      src={option.flag}
+      alt={`${option.label} flag`}
+      width="20"
+      height="20"
+    />
+    <span>{option.label}</span>
+  </div>
+);
+
+const getOptionValue = (option: Country) => option.value;
+
   return (
     <motion.div
       className=" text-white h-screen body "
@@ -214,7 +221,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   placeholder="John"
-                  className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+                  className="w-auto min-w-[266px] outline-none border placeholder:text-gray-300 text-white p-3 border-white rounded-xl bg-transparent"
                   onChange={(e) =>
                     setState({ ...state, fname: e.target.value })
                   }
@@ -234,7 +241,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   placeholder="Doe"
-                  className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+                  className="w-auto min-w-[266px] outline-none border placeholder:text-gray-300 p-3 border-white rounded-xl bg-transparent text-white"
                   onChange={(e) =>
                     setState({ ...state, lname: e.target.value })
                   }
@@ -256,7 +263,7 @@ const SignUp = () => {
                 <input
                   type="email"
                   placeholder="johnDoe@theboys.com"
-                  className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
+                  className="w-auto min-w-[266px] outline-none border placeholder:text-gray-300 text-white p-3 border-white rounded-xl bg-transparent"
                   onChange={(e) =>
                     setState({ ...state, email: e.target.value })
                   }
@@ -315,12 +322,15 @@ const SignUp = () => {
               >
                 <label className="text-lg">Mobile Number</label>
                 <input
-                  type="text"
+                  type="tel"
                   placeholder="+94 77 51xx xxx"
-                  className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
-                  onChange={(e) =>
-                    setState({ ...state, phonenum: e.target.value })
-                  }
+                  className="w-auto min-w-[266px] outline-none border placeholder:text-gray-300 text-white p-3 border-white rounded-xl bg-transparent"
+                  onChange={(e) => {
+                    const inputVal = e.target.value.replace(/[^0-9]/g, ""); // remove non-numeric characters
+                    if (inputVal.length <= 8) {
+                      setState({ ...state, phonenum: inputVal });
+                    }
+                  }}
                   required
                 />
               </motion.div>
@@ -343,7 +353,7 @@ const SignUp = () => {
                 transition: { duration: 0.5, delay: 1 },
               }}
             >
-              <span >Already have an account? </span>
+              <span>Already have an account? </span>
               <Link to={routePaths.login}>
                 <span className="font-bold cursor-pointer">Login</span>
               </Link>
