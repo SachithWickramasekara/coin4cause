@@ -81,7 +81,6 @@ const Step3 = (props: Props) => {
             <div className="flex flex-col gap-3">
               <span className="font-bold text-sm">Minimum donation amount</span>
               <select className="border border-black p-2 rounded-lg  outline-none " onChange={(e): void =>setState({ ...state, mindonation: e.target.value })}>
-                <option value="0">0$</option>
                 <option value="1">1$</option>
                 <option value="5">5$</option>
                 <option value="10">10$</option>

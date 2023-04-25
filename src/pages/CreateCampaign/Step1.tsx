@@ -57,11 +57,12 @@ const Step1 = (props: Props) => {
                   setState({ ...state, ctype: e.target.value })
                 }
               >
-                <option value="Save the Children">Save the Children</option>
-                <option value="World Wildlife Fund">World Wildlife Fund</option>
-                <option value="National Trust for Historic Preservations">
-                  National Trust for Historic Preservations
-                </option>
+                <option value="Social"> Social</option>
+                <option value="Environment">Environmental</option>
+                <option value="Cultural">Cultural</option>
+                <option value="Religious"> Religious</option>
+                <option value="Community"> Community-based</option>
+                <option value="Research"> Research</option>
               </select>
             </div>
             <div className="flex flex-col gap-3">

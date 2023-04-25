@@ -54,11 +54,11 @@ const CampaignCard = ({ data }: { data: CampaignCardDataType }) => {
       </div>
       <div className="text-sm font-normal">{data.desc}</div>
       <div>
-        <Link to={routePaths.donate}>
+        {/* <Link to={routePaths.donate}> */}
           <button className="text-[#00B5D5] border border-[#00B5D5] p-2 rounded-md">
             Read More
           </button>
-        </Link>
+        {/* </Link> */}
       </div>
     </div>
   );

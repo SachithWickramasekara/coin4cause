@@ -144,7 +144,7 @@ const data: DataType[] = [
 ];
 
 const Donate = (props: Props) => {
-  const [value, setValue] = useState<number>(10);
+  const [value, setValue] = useState<number>(1);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(Number(event.target.value));
@@ -204,7 +204,7 @@ const Donate = (props: Props) => {
                   type="range"
                   className="w-full"
                   value={value}
-                  min={0}
+                  min={1}
                   max={100}
                   onChange={handleChange}
                   initial={{ opacity: 0, x: -50 }}

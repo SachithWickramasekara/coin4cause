@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CampaingButtonSection from "../components/Campaign/CampaingButtonSection";
+import { Link } from "react-router-dom";
+import { routePaths } from "../routes/routes";
 
 interface Campaign {
   _id: string;
@@ -18,8 +20,8 @@ interface Campaign {
   Active: boolean;
   __v: number;
   base64: string;
-  id: string,
-  financedocs: string,
+  id: string;
+  financedocs: string;
 }
 
 function CampaignsCard() {
@@ -58,13 +60,13 @@ function CampaignsCard() {
           {campaigns.map((campaign) => (
             <div
               key={campaign._id}
-              className=" text-center bg-[#EFF4F8] p-20 rounded-xl flex flex-col gap-3"
+              className=" text-center bg-[#EFF4F8] p-5 rounded-xl flex flex-col gap-3"
             >
               <div className="h-[200px] lg:h-[170px] md:h-[220px]">
                 <img
                   src={campaign.base64}
                   alt={campaign.ctitle}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover rounded-lg"
                 />
               </div>
               <div className="text-xl font-bold">{campaign.ctitle}</div>
@@ -75,14 +77,14 @@ function CampaignsCard() {
               <div className="text-base font-normal">{campaign.budget}</div>
               <div className="text-base font-normal">{campaign.startdate}</div>
               <div className="text-base font-normal">{campaign.enddate}</div>
-
-              <div>
-                <button className="text-[#00B5D5] font-bold border border-[#00B5D5] p-2 rounded-md">
-                  {" "}
-                  Read More{" "}
-                </button>
-              </div>
-              <div></div>
+              <Link to={routePaths.donate}>
+                <div>
+                  <button className="text-[#00B5D5] font-bold border border-[#00B5D5] p-2 rounded-md">
+                    {" "}
+                    Read More{" "}
+                  </button>
+                </div>
+              </Link>
             </div>
           ))}
         </div>

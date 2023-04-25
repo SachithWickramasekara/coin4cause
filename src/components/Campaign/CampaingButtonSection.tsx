@@ -32,37 +32,37 @@ const CampaingButtonSection = (props: Props) => {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
           <div className="flex flex-col gap-4">
             <span className="text-sm font-bold">Type</span>
-            <button className="border border-[#777777]  rounded-3xl p-1">
+            <button className="border border-[#777777]  rounded-3xl ">
               All
             </button>
           </div>
           <div className="flex flex-col gap-4">
             <span className="text-sm font-bold">Total Fund</span>
             <div className="flex flex-col xl:flex-row gap-2 w-full items-center">
-              <button className="border border-[#777777] w-full  rounded-3xl p-1">
+              <button className="border border-[#777777] w-full  rounded-3xl ">
                 $ 10,000
               </button>
               <span>to</span>
-              <button className="border border-[#777777] w-full  rounded-3xl p-1">
+              <button className="border border-[#777777] w-full  rounded-3xl ">
                 $ 100,000
               </button>
             </div>
           </div>
           <div className="flex flex-col gap-4">
             <span className="text-sm font-bold">Minimum Donation</span>
-            <button className="border border-[#777777] rounded-3xl p-1">
+            <button className="border border-[#777777] rounded-3xl ">
               $ 10,000
             </button>
           </div>
           <div className="flex flex-col gap-4">
             <span className="text-sm font-bold">Location</span>
-            <button className="border border-[#777777] rounded-3xl p-1">
+            <button className="border border-[#777777] rounded-3xl ">
               All
             </button>
           </div>
           <div className="flex flex-col gap-4">
             <span className="text-sm font-bold">Other</span>
-            <button className="border border-[#777777] rounded-3xl p-1">
+            <button className="border border-[#777777] rounded-3xl ">
               All
             </button>
           </div>
