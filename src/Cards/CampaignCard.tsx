@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { CampaignCardDataType } from '../Constants/coin4causeTypes'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { CampaignCardDataType } from "../Constants/coin4causeTypes";
+import { Link } from "react-router-dom";
+import { routePaths } from "../routes/routes";
 
 interface CampaignCard {
   _id: string;
@@ -19,13 +21,15 @@ interface CampaignCard {
   __v: number;
 }
 
-const CampaignCard = ({data}:{data:CampaignCardDataType}) => {
+const CampaignCard = ({ data }: { data: CampaignCardDataType }) => {
   const [campaigns, setCampaigns] = useState<CampaignCard[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get<CampaignCard[]>('https://coin4cause-server.vercel.app/campaigns');
+        const response = await axios.get<CampaignCard[]>(
+          "https://coin4cause-server.vercel.app/campaigns"
+        );
         console.log(response);
         setCampaigns(response.data);
       } catch (error) {
@@ -50,13 +54,14 @@ const CampaignCard = ({data}:{data:CampaignCardDataType}) => {
       </div>
       <div className="text-sm font-normal">{data.desc}</div>
       <div>
-        <button className="text-[#00B5D5] border border-[#00B5D5] p-2 rounded-md">
-          Read More
-        </button>
+        <Link to={routePaths.donate}>
+          <button className="text-[#00B5D5] border border-[#00B5D5] p-2 rounded-md">
+            Read More
+          </button>
+        </Link>
       </div>
     </div>
   );
-}
+};
 
 export default CampaignCard;
-

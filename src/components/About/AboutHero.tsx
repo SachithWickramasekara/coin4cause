@@ -47,7 +47,7 @@ const LandingHero = (props: Props) => {
         </div>
         <div>
           <h4 className="text-sm text-[#00B5D5]">OUR PLATFORM</h4>
-          <h2 className="text-[32px] font-bold py-[23px]">
+          <h2 className="text-[32px] font-bold py-[24px]">
             Global Giving Made <br />
             <span className="text-[#00B5D5]">Secure and Simple.</span>
           </h2>
@@ -68,6 +68,31 @@ const LandingHero = (props: Props) => {
             compassionate world, and we strive to make that vision a reality
             through our platform.{" "}
           </p>
+        </div>
+      </section>
+
+      <section className="py-[120px] text-center">
+        <h4 className="text-sm text-[#00B5D5] mb-[60px]">OUR PLATFORM</h4>
+        <div className="flex justify-center items-center">
+          <div className="w-6/12 bg-[#EFF4F8] rounded-s-xl py-[60px] px-[100px]">
+            <p className="font-bold text-[18px] mb-[48px]">
+              Coin4Cause is the perfect platform for making secure donations.
+              Their blockchain technology ensures that my donations are being
+              used for their intended purpose. I highly recommend this platform
+              to anyone who wants to make a positive impact.
+            </p>
+            <div className="flex px-[10%]">
+              <div className="w-[25%]">
+                <img src="assets/images/testimonial-user.png" alt="" />
+              </div>
+              <div className="w-[75%] text-left place-content-center ml-[24px]">
+                <h3 className="font-bold text-[18px] text-[#00B5D5]">
+                  Sarah James
+                </h3>
+                <h6 className="text-[14px]">Legacy Integration Producer</h6>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>
