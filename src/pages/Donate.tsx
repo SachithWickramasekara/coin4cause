@@ -172,28 +172,28 @@ const Donate = (props: Props) => {
           <div className="lg:w-1/2  lg:p-20 flex flex-col gap-4">
             <div>
               <span className="text-base font-medium"> Type: </span>
-              <span></span>
+              <span>Social</span>
             </div>
             <div>
               <span className="text-base font-medium">Location:</span>
-              <span></span>
+              <span>Africa</span>
             </div>
             <div>
               <span className="text-base font-medium">Duration:</span>
-              <span></span>
+              <span>8 months</span>
             </div>
             <div>
               <span className="text-base font-medium">
                 {" "}
                 Total Donation Amount:
               </span>
-              <span></span>
+              <span>17000</span>
             </div>
             <div>
               <span className="text-base font-medium">
                 Minimum Donation Amount:
               </span>
-              <span></span>
+              <span>$1</span>
             </div>
             <div className="flex flex-col gap-4">
               <span className="text-[#00B5D5] text-xl font-bold">
