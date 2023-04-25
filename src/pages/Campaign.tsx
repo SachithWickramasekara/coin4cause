@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import CampaingButtonSection from '../components/Campaign/CampaingButtonSection';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import CampaingButtonSection from "../components/Campaign/CampaingButtonSection";
 
 interface Campaign {
   _id: string;
@@ -17,7 +17,7 @@ interface Campaign {
   currency: string;
   Active: boolean;
   __v: number;
-  base64: string,
+  base64: string;
 }
 
 function CampaignsCard() {
@@ -26,7 +26,9 @@ function CampaignsCard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get<Campaign[]>('https://coin4cause-server.vercel.app/campaigns');
+        const response = await axios.get<Campaign[]>(
+          "https://coin4cause-server.vercel.app/campaigns"
+        );
         console.log(response);
         setCampaigns(response.data);
       } catch (error) {
@@ -65,17 +67,16 @@ function CampaignsCard() {
               <div className="text-base font-normal">{campaign.budget}</div>
               <div className="text-base font-normal">{campaign.startdate}</div>
               <div className="text-base font-normal">{campaign.enddate}</div>
-              
+
               <div>
-                <button className="text-[#00B5D5] font-bold border border-[#00B5D5] p-2 rounded-md"> Read More </button>
+                <button className="text-[#00B5D5] font-bold border border-[#00B5D5] p-2 rounded-md">
+                  {" "}
+                  Read More{" "}
+                </button>
               </div>
-              <div>
-            
-          </div>
+              <div></div>
             </div>
-            
           ))}
-          
         </div>
       </div>
     </div>
