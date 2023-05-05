@@ -107,7 +107,12 @@ const handleSubmit = (e: { preventDefault: () => void }) => {
             </div>
             <div className="flex flex-col gap-3">
               <span className="font-bold text-sm">Location</span>
-              <select className="border border-black p-2 rounded-lg  outline-none ">
+              <select className="border border-black p-2 rounded-lg  outline-none "
+              onChange={(e): void =>
+                setState({ ...state, country: e.target.value })
+                
+              }>
+                <option value="selectCountry">Select Location</option>
                 <option value="Asia">Asia</option>
                 <option value="Europe">Europe</option>
                 <option value="Australia">Australia</option>

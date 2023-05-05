@@ -55,8 +55,10 @@ const Step1 = (props: Props) => {
                 className="border border-black p-2 rounded-lg  outline-none "
                 onChange={(e): void =>
                   setState({ ...state, ctype: e.target.value })
+                  
                 }
               >
+                <option value="selectType"> Select Type</option>
                 <option value="Social"> Social</option>
                 <option value="Environment">Environmental</option>
                 <option value="Cultural">Cultural</option>
