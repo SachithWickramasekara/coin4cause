@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CampaingButtonSection from "../components/Campaign/CampaingButtonSection";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { routePaths } from "../routes/routes";
+
 
 interface Campaign {
   _id: string;
@@ -26,6 +27,7 @@ interface Campaign {
 
 function CampaignsCard() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -42,6 +44,11 @@ function CampaignsCard() {
 
     fetchData();
   }, []);
+
+  function handleReadMoreClick(campaignId: any) {
+    navigate(`/donate/${campaignId}`);
+  }
+
 
   return (
     <div>
@@ -77,14 +84,16 @@ function CampaignsCard() {
               <div className="text-base font-normal">{campaign.budget}</div>
               <div className="text-base font-normal">{campaign.startdate}</div>
               <div className="text-base font-normal">{campaign.enddate}</div>
-              <Link to={routePaths.donate}>
+
                 <div>
-                  <button className="text-[#00B5D5] font-bold border border-[#00B5D5] p-2 rounded-md">
+                  <button className="text-[#00B5D5] font-bold border border-[#00B5D5] p-2 rounded-md"
+                  onClick={() => handleReadMoreClick(campaign._id)}>
                     {" "}
                     Read More{" "}
+                    
                   </button>
                 </div>
-              </Link>
+
             </div>
           ))}
         </div>

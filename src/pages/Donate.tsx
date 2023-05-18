@@ -1,9 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { motion } from "framer-motion";
+import { Campaign } from "./Index";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-interface Props {}
+
+
+interface Props {
+  campaign?: Campaign;
+}
+
+interface Campaign {
+  _id: string;
+  email: string;
+  ctype: string;
+  cdescription: string;
+  ctitle: string;
+  orgname: string;
+  startdate: string;
+  enddate: string;
+  mobilenum: string;
+  budget: string;
+  mindonation: string;
+  currency: string;
+  Active: boolean;
+  __v: number;
+  base64: string;
+  id: string;
+  financedocs: string;
+  type: string;
+  location: string;
+  duration: string;
+  totalAmount: number;
+  minDonationAmount: number;
+}
+
 interface DataType {
   key: string;
   TransactionID: number;
@@ -143,20 +176,74 @@ const data: DataType[] = [
   },
 ];
 
-const Donate = (props: Props) => {
+
+
+function DonatePage() {
+  const { campaignId } = useParams<{ campaignId: string }>();
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [value, setValue] = useState<number>(1);
+  console.log(campaignId);
+  const [campaigndetails, setCampaigndetails] = useState<Campaign | undefined>(undefined);
+
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get<Campaign[]>(
+          "https://coin4cause-server.vercel.app/campaigns"
+        );
+        console.log(response);
+        const matchingCampaign = response.data.find(campaign => campaign._id === campaignId);
+        setCampaigndetails(matchingCampaign);
+
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+  console.log(campaignId);
+
+  function getDuration(startdate: string, enddate: string): number {
+    const start = new Date(startdate).getMonth();
+    const end = new Date(enddate).getMonth();
+    const duration = end - start;
+    return duration;
+  }
+  
+  function getDurationInMonths(startDateStr: string, endDateStr: string): string {
+    const startDate = new Date(startDateStr);
+    const endDate = new Date(endDateStr);
+  
+    const startYear = startDate.getFullYear();
+    const startMonth = startDate.getMonth();
+    const endYear = endDate.getFullYear();
+    const endMonth = endDate.getMonth();
+  
+    const durationInMonths = (endYear - startYear) * 12 + (endMonth - startMonth);
+  
+    return `${durationInMonths} Months`;
+  }
+  
+  const duration = campaigndetails?.startdate && campaigndetails?.enddate
+  ? getDurationInMonths(campaigndetails.startdate, campaigndetails.enddate)
+  : undefined;
+
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(Number(event.target.value));
   };
   return (
+    
     <div className="lg:container lg:mx-auto flex flex-col ">
       <div className="lg:p-20 p-8 flex flex-col bg-[#EFF4F8]">
-        <div className="text-4xl font-bold">Save the Children</div>
+        <div className="text-4xl font-bold">{campaigndetails?.ctitle}</div>
         <div className="flex flex-col lg:flex-row gap-4 lg:items-center">
           <div className="h-auto lg:w-1/2 flex flex-col gap-4">
             <motion.img
-              src="assets/images/Donate.png"
+              src={campaigndetails?.base64}
+              
               alt="CampaignCard1"
               className="w-full object-fill"
               initial={{ opacity: 0, y: -50 }}
@@ -164,36 +251,37 @@ const Donate = (props: Props) => {
               transition={{ duration: 0.5 }}
             />
             <div className="text-sm font-normal">
-              Join us in making a difference today by donating to help provide
-              food and sustenance for the children of Africa who are currently
-              suffering from severe food shortage. Every contribution counts!
+              {campaigndetails?.cdescription}
             </div>
           </div>
           <div className="lg:w-1/2  lg:p-20 flex flex-col gap-4">
             <div>
-              <span className="text-base font-bold mr-2"> Type: </span>
-              <span>Social</span>
+              <span className="text-base font-medium"> Type: </span>
+              <span>{campaigndetails?.ctype}</span>
             </div>
             <div>
-              <span className="text-base font-bold mr-2">Location:</span>
-              <span>Africa</span>
+              <span className="text-base font-medium">Location:</span>
+              <span>{campaigndetails?.location}</span>
             </div>
             <div>
-              <span className="text-base font-bold mr-2">Duration:</span>
-              <span>8 months</span>
+            
+
+              <span className="text-base font-medium">Duration:</span>
+              <span>{duration}</span>
             </div>
             <div>
-              <span className="text-base font-bold mr-2">
+              <span className="text-base font-medium">
                 {" "}
                 Total Donation Amount:
               </span>
-              <span>17000</span>
+              <span>{campaigndetails?.budget}</span>
             </div>
             <div>
-              <span className="text-base font-bold mr-2">
+              <span className="text-base font-medium">
                 Minimum Donation Amount:
               </span>
-              <span>$1</span>
+              <span>{campaigndetails?.mindonation}</span>
+
             </div>
             <div className="flex flex-col gap-4">
               <span className="text-[#00B5D5] text-xl font-bold">
@@ -204,7 +292,7 @@ const Donate = (props: Props) => {
                   type="range"
                   className="w-full"
                   value={value}
-                  min={1}
+                  min={12}
                   max={100}
                   onChange={handleChange}
                   initial={{ opacity: 0, x: -50 }}
@@ -281,4 +369,4 @@ const Donate = (props: Props) => {
   );
 };
 
-export default Donate;
+export default DonatePage;
