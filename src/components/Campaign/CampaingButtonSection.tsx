@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 
-type Props = {}
+type Props = {
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+};
 
-const CampaingButtonSection = (props: Props) => {
+const CampaingButtonSection = ({ searchTerm, setSearchTerm }: Props) => {
 
-  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <div>

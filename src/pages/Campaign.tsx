@@ -27,7 +27,9 @@ interface Campaign {
 
 function CampaignsCard() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -37,6 +39,7 @@ function CampaignsCard() {
         );
         console.log(response);
         setCampaigns(response.data);
+        setFilteredCampaigns(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -44,6 +47,13 @@ function CampaignsCard() {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const filtered = campaigns.filter((campaign) =>
+      campaign.ctitle.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredCampaigns(filtered);
+  }, [searchTerm, campaigns]);
 
   function handleReadMoreClick(campaignId: any) {
     navigate(`/donate/${campaignId}`);
@@ -61,10 +71,13 @@ function CampaignsCard() {
           Browse Our List of Impactful Donation Campaigns!
         </div>
         <div>
-          <CampaingButtonSection />
+          <CampaingButtonSection
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-center gap-16 mt-6">
-          {campaigns.map((campaign) => (
+          {filteredCampaigns.map((campaign) => (
             <div
               key={campaign._id}
               className=" text-center bg-[#EFF4F8] p-5 rounded-xl flex flex-col gap-3"
