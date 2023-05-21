@@ -4,7 +4,9 @@ import { routePaths } from "../../routes/routes";
 
 import { motion } from "framer-motion";
 
-type Props = {};
+type Props = {
+  isLoggedIn: Boolean;
+};
 
 const LandingHero = (props: Props) => {
   const containerVariants = {
@@ -86,7 +88,8 @@ const LandingHero = (props: Props) => {
             className="flex flex-col lg:flex-row gap-4 justify-center lg:justify-start py-4 pb-10 "
             variants={buttonVariants}
           >
-            <Link to={routePaths.step1}>
+            {props.isLoggedIn ? (
+              <Link to={routePaths.step1}>
               <motion.button
                 className=" bg-none text-[#00B5D5] p-2 rounded-md hover:bg-[#00B5D5] hover:text-white border border-[#00B5D5] w-full lg:w-auto"
                 whileHover={{ scale: 1.1 }}
@@ -95,6 +98,18 @@ const LandingHero = (props: Props) => {
                 Start a Campaign
               </motion.button>
             </Link>
+          ) : (
+            <Link to={routePaths.login}>
+            <motion.button
+              className=" bg-none text-[#00B5D5] p-2 rounded-md hover:bg-[#00B5D5] hover:text-white border border-[#00B5D5] w-full lg:w-auto"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              Start a Campaign
+            </motion.button>
+            </Link>
+            )}
+
             <Link to={routePaths.campaings}>
               <motion.button
                 className="bg-none text-[#00B5D5] p-2 rounded-md hover:bg-[#00B5D5] hover:text-white border border-[#00B5D5] w-full lg:w-auto"

@@ -4,7 +4,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { routePaths } from "../routes/routes";
 import { motion } from "framer-motion";
 
-const Login = () => {
+const Login = ({ setLoggedIn }: { setLoggedIn: (value: boolean) => void }) => {
   const responseMessage = (response: any) => {
     console.log(response);
     navigate("/");
@@ -19,6 +19,7 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -44,10 +45,13 @@ const Login = () => {
       const data = await response.json();
       if (data.status === "ok") {
         // Store the JWT token in localStorage or session storage
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.token); 
+        console.log(localStorage);
         // Redirect to the home page
+        setLoggedIn(true);
         navigate("/");
       } else {
+        console.log(localStorage);
         alert(data.message);
       }
     } catch (error) {

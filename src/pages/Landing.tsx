@@ -4,13 +4,16 @@ import {
   LandingOffer,
   LandingHowItWorks,
 } from "../components/Landing/Index";
+import Navbar from "../layout/Navbar";
 
-type Props = {};
+interface LandingProps {
+  isLoggedIn: boolean;
+}
 
-const Landing = (props: Props) => {
+const Landing = (props: LandingProps) => {
   return (
     <div>
-      <LandingHero />
+       <LandingHero isLoggedIn={props.isLoggedIn} />
       <LandingOffer />
       <LandingHowItWorks />
     </div>

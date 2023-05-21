@@ -21,12 +21,6 @@ const Step1 = (props: Props) => {
 
     const { ctype, cdescription, ctitle, orgname } = state;
 
-    // Check if any of the input fields are empty
-    // if (!ctype || !cdescription || !ctitle || !orgname) {
-    //   console.log("Please fill out all fields");
-    //   return;
-    // }
-
     console.log(state);
 
     // add the navigation to the next page
