@@ -35,12 +35,14 @@ function Navbar(props: NavbarProps) {
 
   useEffect(() => {
     const token:any = localStorage.getItem("token");
-    // You need to decode the token to extract the user email
-    // You can use a library like jwt-decode for decoding the token
-    // Here's an example assuming the token contains a field called "email"
-    const decodedToken:any = jwt_decode(token);
-    const email = decodedToken.email;
-    setUserEmail(email);
+    if (token) {
+      // You need to decode the token to extract the user email
+      // You can use a library like jwt-decode for decoding the token
+      // Here's an example assuming the token contains a field called "email"
+      const decodedToken:any = jwt_decode(token);
+      const email = decodedToken.email;
+      setUserEmail(email);
+    }
   }, []);
 
   if (window.innerWidth > 820) {
