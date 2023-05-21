@@ -144,19 +144,19 @@ const SignUp = () => {
     hover: { scale: 1.1 },
   };
 
-const getOptionLabel = (option: Country) => (
-  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-    <img
-      src={option.flag}
-      alt={`${option.label} flag`}
-      width="20"
-      height="20"
-    />
-    <span>{option.label}</span>
-  </div>
-);
+  const getOptionLabel = (option: Country): JSX.Element => (
+    <>
+      <img
+        src={option.flag}
+        alt={`${option.label} flag`}
+        width="20"
+        height="20"
+      />
+      <span>{option.label}</span>
+    </>
+  );
 
-const getOptionValue = (option: Country) => option.value;
+  const getOptionValue = (option: Country) => option.value;
 
   return (
     <motion.div
@@ -301,14 +301,17 @@ const getOptionValue = (option: Country) => option.value;
             >
               <div className="flex flex-col">
                 <label className="text-lg">Country</label>
+
                 <Select
                   options={countryList}
                   value={selectedCountry}
-                  //className="w-auto min-w-[266px] outline-none border placeholder:text-white p-3 border-white rounded-md bg-transparent"
                   onChange={handleCountryChange}
                   placeholder="Select a country"
                   isSearchable
                   styles={customStyles}
+                  
+                  
+                  getOptionValue={getOptionValue}
                 />
               </div>
               <motion.div

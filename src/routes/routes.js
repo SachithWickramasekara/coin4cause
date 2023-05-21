@@ -14,4 +14,5 @@ export const routePaths = {
   step5:"/create-campaignStep5",
   done:"/done",
   donate: `/donate/:campaignId`,
+
 };
