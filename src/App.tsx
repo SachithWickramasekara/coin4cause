@@ -6,17 +6,37 @@ import {Step1,Step2,Step3,Step4,Step5,StepDone} from './pages/CreateCampaign/Ind
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Footer from "./layout/Footer";
-
+import jwt_decode from "jwt-decode";
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogout = () => {
+    // Perform logout logic here
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+  };
+
+  const setLoggedIn = (value: boolean) => {
+    localStorage.setItem("isLoggedIn", value.toString());
+    setIsLoggedIn(value);
+  };
 
   useEffect(() => {
     // Simulate loading delay with setTimeout
     setTimeout(() => {
       setLoading(false);
     }, 4000);
+
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") {
+      setIsLoggedIn(true);
+    }
+    
   }, []);
+
+  
 
   if (loading) {
     return <LoadingScreen />;
@@ -29,11 +49,12 @@ function App() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <Navbar />
+        <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+
       </motion.nav>
       <Routes>
-        <Route path={routePaths.home} element={<Landing />} />
-        <Route path={routePaths.login} element={<Login />} />
+        <Route path={routePaths.home} element={<Landing isLoggedIn={isLoggedIn}/>} />
+        <Route path={routePaths.login} element={<Login setLoggedIn={setLoggedIn} />} />
         <Route path={routePaths.signup} element={<SignUp />} />
         <Route
           path={routePaths.usernamepassword}
@@ -54,7 +75,7 @@ function App() {
       {window.location.pathname !== routePaths.login &&
       window.location.pathname !== routePaths.signup &&
       window.location.pathname !== routePaths.usernamepassword ? (
-        <Footer />
+        <Footer isLoggedIn={isLoggedIn}/>
       ) : null}
     </div>
   );

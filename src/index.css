@@ -71,3 +71,38 @@ input[type="range"] {
 .ant-table {
   background-color: #3f3d3d;
 }
+
+.avatar-circle {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar-circle img {
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 120px;
+  padding: 8px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.dropdown button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  color: #3f3d3d;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown button:hover {
+  background-color: #eaeaea;
+}
