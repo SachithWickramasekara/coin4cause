@@ -15,9 +15,9 @@ const Footer = (props: FooterProps) => {
         <div className="lg:w-1/2 sm:p-10">
           <img src="assets/icons/Logo.png" alt="logo" />
           <span>
-            Contact Us  If you have any questions or concerns, please don't
-            hesitate to contact us. You can reach our customer support team by
-            email at support@coin4cause.com or by phone at +1 (555) 123-4567.
+            If you have any questions or concerns, please don't hesitate to
+            contact us. You can reach our customer support team by email at
+            support@coin4cause.com or by phone at +1 (555) 123-4567.
           </span>
         </div>
         <div className="w-full sm:p-10 flex lg:flex-row flex-col gap-8">
