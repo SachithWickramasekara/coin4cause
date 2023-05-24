@@ -1,11 +1,18 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { routePaths } from "../../routes/routes";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import type { DatePickerProps } from "antd";
 import { DatePicker, Space } from "antd";
 import dayjs from "dayjs";
+import Select, { ActionMeta, SingleValue } from "react-select";
 
 interface Props {}
+
+interface Country {
+  value: string;
+  label: string;
+  flag: string;
+}
 
 const Step2 = (props: Props) => {
   console.log("Step2 rendered"); // add this line
@@ -67,6 +74,44 @@ const handleSubmit = (e: { preventDefault: () => void }) => {
     console.log(date, dateString);
   };
 
+  
+  const [countryList, setCountryList] = useState<Country[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+
+  useEffect(() => {
+    fetch("https://restcountries.com/v2/all")
+      .then((response) => response.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          const mappedCountries = data.map((country) => ({
+            value: country.name,
+            label: country.name,
+            flag: country.flag,
+          }));
+          setCountryList(mappedCountries);
+        }
+      })
+      .catch((error) => console.log(error));
+  }, []);
+  
+  const handleCountryChange = (selectedOption: Country | null) => {
+    setSelectedCountry(selectedOption);
+  };
+
+  const getOptionLabel = (option: Country): JSX.Element => (
+    <>
+      <img
+        src={option.flag}
+        alt={`${option.label} flag`}
+        width="20"
+        height="20"
+      />
+      <span>{option.label}</span>
+    </>
+  );
+
+  const getOptionValue = (option: Country) => option.value;
+
   const onChange: DatePickerProps["onChange"] = (
     date: any,
     dateString: any
@@ -107,16 +152,17 @@ const handleSubmit = (e: { preventDefault: () => void }) => {
             </div>
             <div className="flex flex-col gap-3">
               <span className="font-bold text-sm">Location</span>
-              <select className="border border-black p-2 rounded-lg  outline-none "
-              onChange={(e): void =>
-                setState({ ...state, country: e.target.value })
-                
-              }>
-                <option value="selectCountry">Select Location</option>
-                <option value="Asia">Asia</option>
-                <option value="Europe">Europe</option>
-                <option value="Australia">Australia</option>
-              </select>
+              <Select
+                  options={countryList}
+                  value={selectedCountry}
+                  onChange={handleCountryChange}
+                  placeholder="Select a country"
+                  isSearchable
+                  
+                  
+                  
+                  getOptionValue={getOptionValue}
+                />
             </div>
             <div className="flex flex-col gap-3">
               <span className="font-bold text-sm">Your Email</span>

@@ -4,7 +4,6 @@ import CampaingButtonSection from "../components/Campaign/CampaingButtonSection"
 import { Link, useNavigate } from "react-router-dom";
 import { routePaths } from "../routes/routes";
 
-
 interface Campaign {
   _id: string;
   email: string;
@@ -15,6 +14,7 @@ interface Campaign {
   startdate: string;
   enddate: string;
   mobilenum: string;
+  location: string;
   budget: string;
   mindonation: string;
   currency: string;
@@ -30,16 +30,24 @@ function CampaignsCard() {
   const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+  // const [selectedMinAmount, setSelectedMinAmount] = useState<string | null>(null);
+  // const [selectedMaxAmount, setSelectedMaxAmount] = useState<string | null>(null);
+  // const [selectedMinDonation, setSelectedMinDonation] = useState<string | null>(null);
+  // const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
+        
         const response = await axios.get<Campaign[]>(
           "https://coin4cause-server.vercel.app/campaigns"
         );
         console.log(response);
         setCampaigns(response.data);
         setFilteredCampaigns(response.data);
+        
+        
       } catch (error) {
         console.error(error);
       }
@@ -48,22 +56,50 @@ function CampaignsCard() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const filtered = campaigns.filter((campaign) =>
-      campaign.ctitle.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredCampaigns(filtered);
-  }, [searchTerm, campaigns]);
+  // console.log(campaign.ctype)
 
-  function handleReadMoreClick(campaignId: any) {
-    navigate(`/donate/${campaignId}`);
+  useEffect(() => {
+  let filtered = campaigns;
+
+  // Filter by search term
+  filtered = filtered.filter((campaign) =>
+    campaign.ctitle.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Filter by campaign type
+  if (selectedType) {
+    filtered = filtered.filter((campaign) => campaign.ctype === selectedType);
   }
 
+  // Set the filtered campaigns
+  setFilteredCampaigns(filtered);
+}, [searchTerm, selectedType, campaigns]);useEffect(() => {
+  let filtered = campaigns;
+
+  // Filter by search term
+  filtered = filtered.filter((campaign) =>
+    campaign.ctitle.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Filter by campaign type
+  if (selectedType) {
+    filtered = filtered.filter((campaign) => campaign.ctype === selectedType);
+  }
+
+  // Set the filtered campaigns
+  setFilteredCampaigns(filtered);
+}, [searchTerm, selectedType, campaigns]);
+  
+
+  function handleReadMoreClick(campaignId: any, budget: string) {
+    navigate(`/donate/${campaignId}?budget=${budget}`);
+  }
 
   return (
     <div>
       <div className="container mx-auto flex flex-col gap-8 p-8 lg:p-20 justify-center items-center">
         <div className="text-xl lg:text-3xl font-bold lg:w-[450px] text-center">
+          
           Join <span className="text-[#00B5D5]">Coin4Cause</span> and Make a
           Difference Today
         </div>
@@ -74,10 +110,13 @@ function CampaignsCard() {
           <CampaingButtonSection
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-center gap-16 mt-6">
           {filteredCampaigns.map((campaign) => (
+            
             <div
               key={campaign._id}
               className=" text-center bg-[#EFF4F8] p-5 rounded-xl flex flex-col gap-3"
@@ -100,7 +139,7 @@ function CampaignsCard() {
 
                 <div>
                   <button className="text-[#00B5D5] font-bold border border-[#00B5D5] p-2 rounded-md"
-                  onClick={() => handleReadMoreClick(campaign._id)}>
+                  onClick={() => handleReadMoreClick(campaign._id, campaign.budget)}>
                     {" "}
                     Read More{" "}
                     
