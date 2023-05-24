@@ -20,11 +20,14 @@ function Navbar(props: NavbarProps) {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
+    setDropdownOpen(false);
     navigate("/");
   };
 
   const handleSettingsClick = () => {
+    setDropdownOpen(false);
     navigate("/");
+    
   };
 
   const toggleMenu = () => {
@@ -81,9 +84,9 @@ function Navbar(props: NavbarProps) {
 
             {isDropdownOpen && (
               <div className="dropdown">
-              <button onClick={handleProfileClick}>Profile</button>
-              <button onClick={handleSettingsClick}>Settings</button>
-              <button onClick={props.onLogout}>Log Out</button>
+                <button onClick={handleProfileClick}>Profile</button>
+                <button onClick={handleSettingsClick}>Settings</button>
+                <button onClick={props.onLogout}>Log Out</button>
               </div>
           )}
 

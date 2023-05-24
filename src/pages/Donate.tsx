@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import { Campaign } from "./Index";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-
-
+import jwt_decode from "jwt-decode";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   campaign?: Campaign;
@@ -47,144 +47,25 @@ interface DataType {
   tags: string[];
 }
 
-const columns: ColumnsType<DataType> = [
-  {
-    title: "Transaction ID",
-    dataIndex: "TransactionID",
-    key: "TransactionID",
-    render: (text) => <div>{text}</div>,
-  },
-  {
-    title: "Wallets Address",
-    dataIndex: "WalletsAddress",
-    key: "WalletsAddress",
-  },
-  {
-    title: "Currency",
-    dataIndex: "Currency",
-    key: "Currency",
-  },
-  {
-    title: "Amount",
-    dataIndex: "Amount",
-    key: "Amount",
-  },
-  {
-    title: "User ID",
-    dataIndex: "UserID",
-    key: "UserID",
-  },
-  {
-    title: "Status",
-    key: "tags",
-    dataIndex: "tags",
-    render: (_, { tags }) => (
-      <span
-        className={
-          tags.includes("availble")
-            ? "bg-white border border-[#00D43C8A] rounded-lg px-2 py-1 text-[#00D43C8A] font-medium"
-            : " bg-white border border-[#FF030399] rounded-lg px-2 py-1 text-[#FF030399] font-medium"
-        }
-      >
-        {tags[0].toUpperCase()}
-      </span>
-    ),
-  },
-];
-
-const data: DataType[] = [
-  {
-    key: "1",
-    TransactionID: 1111111,
-    WalletsAddress: "afghks004569",
-    Currency: "Bitcoin",
-    Amount: 69000000,
-    UserID: 200109600,
-    tags: ["availble"],
-  },
-  {
-    key: "2",
-    TransactionID: 1111110,
-    WalletsAddress: "eadas004569",
-    Currency: "LKR",
-    Amount: 79000000,
-    UserID: 200109600,
-    tags: ["not availble"],
-  },
-  {
-    key: "3",
-    TransactionID: 1111100,
-    WalletsAddress: "csd21r1thgfhrj",
-    Currency: "USD",
-    Amount: 89000000,
-    UserID: 200109600,
-    tags: ["availble"],
-  },
-  {
-    key: "4",
-    TransactionID: 1111111,
-    WalletsAddress: "afghks004569",
-    Currency: "Bitcoin",
-    Amount: 69000000,
-    UserID: 200109600,
-    tags: ["availble"],
-  },
-  {
-    key: "5",
-    TransactionID: 1111110,
-    WalletsAddress: "eadas004569",
-    Currency: "LKR",
-    Amount: 79000000,
-    UserID: 200109600,
-    tags: ["not availble"],
-  },
-  {
-    key: "6",
-    TransactionID: 1111100,
-    WalletsAddress: "csd21r1thgfhrj",
-    Currency: "USD",
-    Amount: 89000000,
-    UserID: 200109600,
-    tags: ["availble"],
-  },
-  {
-    key: "7",
-    TransactionID: 1111111,
-    WalletsAddress: "afghks004569",
-    Currency: "Bitcoin",
-    Amount: 69000000,
-    UserID: 200109600,
-    tags: ["availble"],
-  },
-  {
-    key: "8",
-    TransactionID: 1111110,
-    WalletsAddress: "eadas004569",
-    Currency: "LKR",
-    Amount: 79000000,
-    UserID: 200109600,
-    tags: ["not availble"],
-  },
-  {
-    key: "9",
-    TransactionID: 1111100,
-    WalletsAddress: "csd21r1thgfhrj",
-    Currency: "USD",
-    Amount: 89000000,
-    UserID: 200109600,
-    tags: ["availble"],
-  },
-];
-
 
 
 function DonatePage() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const budget = searchParams.get("budget");
+  const numericBudget = budget ? budget.replace(/[^0-9.]/g, "") : "";
+  console.log(numericBudget);
   const { campaignId } = useParams<{ campaignId: string }>();
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-  const [value, setValue] = useState<number>(1);
-  console.log(campaignId);
   const [campaigndetails, setCampaigndetails] = useState<Campaign | undefined>(undefined);
+  const [value, setValue] = useState<number>(campaigndetails?.minDonationAmount ?? 1);
+  const [donateAnonymously, setDonateAnonymously] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [transactionData, setTransactionData] = useState<DataType[]>([]); // Update the type to DataType[]
+  const [tableData, setTableData] = useState<DataType[]>([]);
 
+  console.log(campaignId);
+  
 
   useEffect(() => {
     async function fetchData() {
@@ -195,6 +76,7 @@ function DonatePage() {
         console.log(response);
         const matchingCampaign = response.data.find(campaign => campaign._id === campaignId);
         setCampaigndetails(matchingCampaign);
+        
 
       } catch (error) {
         console.error(error);
@@ -204,6 +86,86 @@ function DonatePage() {
     fetchData();
   }, []);
   console.log(campaignId);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://coin4cause-server.vercel.app/transactionData"
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setTransactionData(data);
+          console.log(data);
+          const transactions = data.filter(
+            (transaction: any) => transaction.campaignId === campaignId
+          );
+          console.log(transactions);
+
+          const formattedTableData = transactions.map((transaction: any, index: number) => ({
+            key: index.toString(),
+            TransactionID: transaction.transactionId,
+            WalletsAddress: transaction.transactionId.walletAddress,
+            Currency: "Bitcoin",
+            Amount: 512,
+            UserID: transaction.transactionUserId, //get The userId from the transactionID
+            tags: ["available"],
+          }));
+
+          setTableData(formattedTableData);
+        } else {
+          // Handle error response
+        }
+      } catch (error) {
+        // Handle network or other errors
+      }
+    };
+
+    fetchData();
+
+    //const interval = setInterval(fetchData, 10000); // Fetch data every 10 seconds
+
+    //return () => clearInterval(interval); // Clean up the interval when the component unmounts
+  }, []);
+  
+
+
+
+
+const handleDonateAnonymouslyChange = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken:any = jwt_decode(token);
+      const email = decodedToken.email;
+      const name = decodedToken.fname +" " + decodedToken.lname;
+      const userId = decodedToken.userid
+      console.log(name)
+      console.log(localStorage);
+
+      const payload = {
+        transactionId: 12345, //This should be fixed
+        campaignId: campaignId,
+        walletsAddress: "0x12343453450",
+        currency: "Bitcoin",
+        name: name,
+        email: email,
+        amount: value,
+        userId: userId,
+      };
+
+      const response = await axios.post(
+        "http://localhost:8080/transactions",
+        payload
+      );
+
+      console.log(response.data);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
   function getDuration(startdate: string, enddate: string): number {
     const start = new Date(startdate).getMonth();
@@ -233,7 +195,14 @@ function DonatePage() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(Number(event.target.value));
+    console.log(campaigndetails);
   };
+
+  const toggleDonateAnonymously = () => {
+    setDonateAnonymously(prevValue => !prevValue);
+  };
+  
+  
   return (
     
     <div className="lg:container lg:mx-auto flex flex-col ">
@@ -288,12 +257,14 @@ function DonatePage() {
                 Donate Now
               </span>
               <div className="flex flex-row gap-4">
+                
                 <motion.input
                   type="range"
                   className="w-full"
                   value={value}
-                  min={12}
-                  max={100}
+                  min={campaigndetails?.minDonationAmount}
+                  max={numericBudget}
+                  
                   onChange={handleChange}
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -315,7 +286,12 @@ function DonatePage() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.9 }}
               >
-                <input type="radio" className="" />
+                <input
+                  type="radio"
+                  className=""
+                  
+                  onChange={handleDonateAnonymouslyChange}
+                />
                 <span>Donate Anonymously</span>
               </motion.div>
               <motion.div
@@ -323,7 +299,7 @@ function DonatePage() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 1.2 }}
               >
-                <button className="text-[#00B5D5] font-bold border border-[#00B5D5] p-2 rounded-md hover:bg-[#00B5D5] hover:text-white">
+                <button className="text-[#00B5D5] font-bold border border-[#00B5D5] p-2 rounded-md hover:bg-[#00B5D5] hover:text-white" onClick={handleDonateAnonymouslyChange}>
                   Donate 💙
                 </button>
               </motion.div>
@@ -357,8 +333,15 @@ function DonatePage() {
             transition={{ delay: 0.6, duration: 0.5 }}
           >
             <Table
-              columns={columns}
-              dataSource={data}
+              columns={[
+                { title: "TransactionID", dataIndex: "TransactionID", key: "TransactionID" },
+                { title: "WalletsAddress", dataIndex: "WalletsAddress", key: "WalletsAddress" },
+                { title: "Currency", dataIndex: "Currency", key: "Currency" },
+                { title: "Amount", dataIndex: "Amount", key: "Amount" },
+                { title: "UserID", dataIndex: "UserID", key: "UserID" },
+                { title: "tags", dataIndex: "tags", key: "tags" }
+              ]}
+              dataSource={tableData}
               pagination={false}
               className="w-full rounded-lg border border-gray-400"
             />

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { routePaths } from "../routes/routes";
 import { motion } from "framer-motion";
+import jwt_decode from "jwt-decode";
 
 const Login = ({ setLoggedIn }: { setLoggedIn: (value: boolean) => void }) => {
   const responseMessage = (response: any) => {
@@ -44,8 +45,14 @@ const Login = ({ setLoggedIn }: { setLoggedIn: (value: boolean) => void }) => {
 
       const data = await response.json();
       if (data.status === "ok") {
+        const { token } = data;
+        const decodedToken:any = jwt_decode(token);
+        const { fname, lname, userid } = decodedToken;
         // Store the JWT token in localStorage or session storage
         localStorage.setItem("token", data.token); 
+        localStorage.setItem("fname", fname);
+        localStorage.setItem("fname", lname);
+        localStorage.setItem("userid", userid);
         console.log(localStorage);
         // Redirect to the home page
         setLoggedIn(true);
