@@ -4,9 +4,20 @@ import Select, { ActionMeta, SingleValue } from "react-select";
 type Props = {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
-  selectedType: any;
-  setSelectedType: (term: string) => void;
+  selectedType: string | null;
+  setSelectedType: (term: string | null) => void;
+  selectedMinDonation: string | null;
+  setSelectedMinDonation: (term: string | null) => void;
+  selectedCountry: string | null; // Add selectedCountry prop
+  setSelectedCountry: (country: string | null) => void; // Add setSelectedCountry prop
+
+  selectedMinAmount: string | null;
+  setSelectedMinAmount: (term: string | null) => void;
+
+  selectedMaxAmount: string | null;
+  setSelectedMaxAmount: (term: string | null) => void;
 };
+
 
 interface Type {
   value: string;
@@ -24,7 +35,16 @@ interface Country {
   flag: string;
 }
 
-const CampaignButtonSection = ({ searchTerm, setSearchTerm, selectedType, setSelectedType,}: Props) => {
+const CampaignButtonSection = ({
+  searchTerm,
+  setSearchTerm,
+  selectedType,
+  setSelectedType,
+  selectedMinDonation,
+  setSelectedMinDonation,
+  selectedCountry, // Add selectedCountry prop
+  setSelectedCountry, // Add setSelectedCountry prop
+}: Props) => {
   const typeList: Type[] = [
     { value: "Social", label: "Social" },
     { value: "Environment", label: "Environment" },
@@ -35,20 +55,20 @@ const CampaignButtonSection = ({ searchTerm, setSearchTerm, selectedType, setSel
   ];
 
   const minDonationList: Type[] = [
-    { value: "1$", label: "1$" },
-    { value: "5$", label: "5$" },
-    { value: "10$", label: "10$" },
-    { value: "50$", label: "50$" },
+    { value: "1", label: "1$" },
+    { value: "5", label: "5$" },
+    { value: "10", label: "10$" },
+    { value: "50", label: "50$" },
   ];
 
   const selectedTypeValue = selectedType ?? { value: '', label: 'All' };
-  // const [selectedMinDonation, setSelectedMinDonation] = useState<Type | null>(null);
+  const selectedMinDonationValue = selectedMinDonation ?? { value: '', label: 'All' };
 
   const [countryList, setCountryList] = useState<Country[]>([]);
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
 
-  // const [minamount, setMinAmount] = useState(0);
-  // const [maxamount, setMaxAmount] = useState(0);
+
+  const [minamount, setMinAmount] = useState(0);
+  const [maxamount, setMaxAmount] = useState(0);
 
   useEffect(() => {
     fetch("https://restcountries.com/v2/all")
@@ -65,10 +85,13 @@ const CampaignButtonSection = ({ searchTerm, setSearchTerm, selectedType, setSel
       })
       .catch((error) => console.log(error));
   }, []);
-
+  
   const handleCountryChange = (selectedOption: Country | null) => {
-    setSelectedCountry(selectedOption);
+    setSelectedCountry(selectedOption !== null ? selectedOption.value : null);
   };
+  
+  
+  
 
   const getOptionLabel = (option: Country): JSX.Element => (
     <>
@@ -84,30 +107,25 @@ const CampaignButtonSection = ({ searchTerm, setSearchTerm, selectedType, setSel
 
   const getOptionValue = (option: Country) => option.value;
 
-  // const handleMinDonationChange = (
-  //   selectedOption: SingleValue<MinDonation>,
-  //   actionMeta: ActionMeta<MinDonation>
-  // ) => {
-  //   setSelectedMinDonation(selectedOption);
-  // };
+  const handleMinDonationChange = (selectedOption: SingleValue<Type>) => {
+    setSelectedMinDonation(selectedOption ? selectedOption.value : null);
+  };
+  
 
-  const handleTypeChange = (
-    selectedOption: SingleValue<any>,
-    actionMeta: ActionMeta<Type>
-  ) => {
-    setSelectedType(selectedOption);
-    console.log(selectedOption);
+  const handleTypeChange = (selectedOption: SingleValue<Type>) => {
+    setSelectedType(selectedOption ? selectedOption.value : null);
   };
 
-  // const handleMinAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const value = event.target.value;
-  //   setMinAmount(parseFloat(value));
-  // };
+  const handleMinAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setMinAmount(parseFloat(value));
+    console.log(value)
+  };
 
-  // const handleMaxAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const value = event.target.value;
-  //   setMaxAmount(parseFloat(value));
-  // };
+  const handleMaxAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setMaxAmount(parseFloat(value));
+  };
 
   const filterCampaigns = () => {
     // Perform the filtering based on selected filters
@@ -117,10 +135,10 @@ const CampaignButtonSection = ({ searchTerm, setSearchTerm, selectedType, setSel
     const filteredCampaigns = {
       searchTerm,
       selectedType,
-      // selectedMinDonation,
+      selectedMinDonation,
       selectedCountry,
-      // minamount,
-      // maxamount,
+      minamount,
+      maxamount,
     };
 
     console.log(filteredCampaigns);
@@ -156,58 +174,59 @@ const CampaignButtonSection = ({ searchTerm, setSearchTerm, selectedType, setSel
           <div className="flex flex-col gap-4">
             <span className="text-sm font-bold">Type</span>
             <Select
-              options={typeList}
-              value={selectedType}
-              onChange={handleTypeChange}
-              placeholder="All"
-              isSearchable
-            />
+        className="w-1/2"
+        options={typeList}
+        value={typeList.find((type) => type.value === selectedType)}
+        onChange={handleTypeChange}
+        placeholder="Select Campaign Type"
+        isClearable={true}
+      />
           </div>
           <div className="flex flex-col gap-4">
             <span className="text-sm font-bold">Total Fund</span>
             <div className="flex flex-col xl:flex-row gap-5 w-full items-center">
               <div className="rounded border border-[#777777] px-auto flex flex-row">
-                <input
+                { <input
                   type="number"
                   className="text-lg self-center w-20 px-2 py-1 rounded border border-[#777777]"
-                  // value={minamount}
-                  // onChange={handleMinAmountChange}
-                />
+                  value={minamount}
+                  onChange={handleMinAmountChange}
+                />}
               </div>
               <span>to</span>
               <div className="rounded border border-[#777777] px-auto flex flex-row">
                 <input
                   type="number"
                   className="text-lg self-center w-20 px-2 py-1 rounded border border-[#777777]"
-                  // value={maxamount}
-                  // onChange={handleMaxAmountChange}
+                  value={maxamount}
+                  onChange={handleMaxAmountChange}
                 />
               </div>
             </div>
           </div>
 
           <div className="flex flex-col gap-4">
-            <span className="text-sm font-bold">Minimum Donation</span>
+          <span className="text-sm font-bold">Minimum Donation</span>
             <Select
-              options={minDonationList}
-              // value={selectedMinDonation}
-              // onChange={handleMinDonationChange}
-              placeholder="All"
-              isSearchable
-            />
+        className="w-1/2"
+        options={minDonationList}
+        value={minDonationList.find((type) => type.value === selectedMinDonation)}
+        onChange={handleMinDonationChange}
+        placeholder="Select Minimum Donation"
+        isClearable={true}
+      />
           </div>
           <div className="flex flex-col gap-4">
             <span className="text-sm font-bold">Location</span>
+
             <Select
-                  options={countryList}
-                  value={selectedCountry}
-                  onChange={handleCountryChange}
-                  placeholder="Select a country"
-                  isSearchable
-                  
-                  
-                  getOptionValue={getOptionValue}
-                />
+      className="w-1/4"
+      options={countryList}
+      value={countryList.find((type) => selectedCountry && type.value === selectedCountry)}
+      onChange={handleCountryChange} // Add onChange event handler
+      placeholder="Select a country"
+      isClearable={true}
+    />
           </div>
         </div>
       </div>
