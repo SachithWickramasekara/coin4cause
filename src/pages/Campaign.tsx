@@ -31,8 +31,8 @@ function CampaignsCard() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState<string | null>(null);
-  const [selectedMinAmount, setSelectedMinAmount] = useState<string | null>(null);
-  const [selectedMaxAmount, setSelectedMaxAmount] = useState<string | null>(null);
+  const [selectedMinAmount, setMinAmount] = useState<number | null>(null);
+  const [selectedMaxAmount, setMaxAmount] = useState<number | null>(null);
 
   const [selectedMinDonation, setSelectedMinDonation] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
@@ -90,19 +90,17 @@ function CampaignsCard() {
     console.log(filtered);
   }
 
-   // Filter by range
-if (selectedMinAmount || selectedMaxAmount) {
-  console.log(selectedMinAmount);
-  console.log(selectedMaxAmount);
-  filtered = filtered.filter((campaign) => {
-    const budget = parseFloat(campaign.budget.replace(/[^0-9.-]+/g, ''));
-
-    const minAmount = selectedMinAmount ? parseFloat(selectedMinAmount) : Number.MIN_SAFE_INTEGER;
-    const maxAmount = selectedMaxAmount ? parseFloat(selectedMaxAmount) : Number.MAX_SAFE_INTEGER;
-
-    filtered = filtered.filter(() => budget && budget >= maxAmount);
-  });
-}
+  if (selectedMinAmount !== null && selectedMaxAmount !== null) {
+    filtered = filtered.filter((campaign) => {
+      let campaignAmount = parseFloat(campaign.budget.replace(/[$,]/g, ''));
+  
+      return (
+        selectedMinAmount <= campaignAmount && campaignAmount <= selectedMaxAmount
+      );
+    });
+  }
+  
+  
 
 
   // Set the filtered campaigns
@@ -134,9 +132,9 @@ if (selectedMinAmount || selectedMaxAmount) {
   selectedMinDonation={selectedMinDonation}
   setSelectedMinDonation={setSelectedMinDonation}
   selectedMinAmount={selectedMinAmount}
-  setSelectedMinAmount={setSelectedMinAmount}
+  setMinAmount={setMinAmount}
   selectedMaxAmount={selectedMaxAmount}
-  setSelectedMaxAmount={setSelectedMaxAmount}
+  setMaxAmount={setMaxAmount}
   selectedCountry={selectedCountry}
   setSelectedCountry={setSelectedCountry}
   

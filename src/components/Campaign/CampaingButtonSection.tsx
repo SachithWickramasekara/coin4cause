@@ -10,12 +10,10 @@ type Props = {
   setSelectedMinDonation: (term: string | null) => void;
   selectedCountry: string | null;
   setSelectedCountry: (country: string | null) => void;
-
-  selectedMinAmount: string | null;
-  setSelectedMinAmount: (term: string | null) => void;
-
-  selectedMaxAmount: string | null;
-  setSelectedMaxAmount: (term: string | null) => void;
+  selectedMinAmount: number | null;
+  setMinAmount: (term: number | null) => void;
+  selectedMaxAmount: number | null;
+  setMaxAmount: (value: number | null) => void;
 };
 
 
@@ -40,9 +38,9 @@ const CampaignButtonSection = ({
   selectedCountry,
   setSelectedCountry,
   selectedMinAmount,
-  setSelectedMinAmount,
+  setMinAmount,
   selectedMaxAmount,
-  setSelectedMaxAmount,
+  setMaxAmount,
 }: Props) => {
   const typeList: Type[] = [
     { value: "Social", label: "Social" },
@@ -65,10 +63,6 @@ const CampaignButtonSection = ({
   const selectedMinDonationValue = selectedMinDonation ?? { value: '', label: 'All' };
 
   const [countryList, setCountryList] = useState<Country[]>([]);
-
-
-  const [minamount, setMinAmount] = useState(0);
-  const [maxamount, setMaxAmount] = useState(0);
 
   useEffect(() => {
     fetch("https://restcountries.com/v2/all")
@@ -113,16 +107,15 @@ const CampaignButtonSection = ({
   };
 
   const handleMinAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setMinAmount(parseFloat(value));
-    console.log(value)
+    setMinAmount(Number(event.target.value));
   };
-
+  
   const handleMaxAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setMaxAmount(parseFloat(value));
-    console.log(value)
+    setMaxAmount(Number(event.target.value));
   };
+  
+
+
 
   const handleCountryChange = (selectedOption: SingleValue<Country>) => {
     const selectedCountryValue = selectedOption ? selectedOption.value : null;
@@ -132,24 +125,20 @@ const CampaignButtonSection = ({
   
 
   const filterCampaigns = () => {
-    // Perform the filtering based on selected filters
-    // You can fetch the campaign details here and update the state accordingly
-    // For example:
     console.log("button pressed");
     const filteredCampaigns = {
       searchTerm,
       selectedType,
       selectedMinDonation,
-      minamount,
-      maxamount,
+      selectedMinAmount,
+      selectedMaxAmount,
       selectedCountry,
     };
-
+  
     console.log(filteredCampaigns);
     // Update the state or make API calls to fetch campaign details based on the filters
-
-    
   };
+  
 
   return (
     <div>
@@ -195,7 +184,7 @@ const CampaignButtonSection = ({
                 { <input
                   type="number"
                   className="text-lg self-center w-20 px-2 py-1 rounded border border-[#777777]"
-                  value={minamount}
+                  value={selectedMinAmount !== null ? selectedMinAmount.toString() : ''}
                   onChange={handleMinAmountChange}
                 />}
               </div>
@@ -204,7 +193,7 @@ const CampaignButtonSection = ({
                 <input
                   type="number"
                   className="text-lg self-center w-20 px-2 py-1 rounded border border-[#777777]"
-                  value={maxamount}
+                  value={selectedMaxAmount !== null ? selectedMaxAmount.toString() : ''}
                   onChange={handleMaxAmountChange}
                 />
               </div>
