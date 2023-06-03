@@ -14,7 +14,7 @@ interface Campaign {
   startdate: string;
   enddate: string;
   mobilenum: string;
-  location: string;
+  country: string;
   budget: string;
   mindonation: string;
   currency: string;
@@ -33,8 +33,10 @@ function CampaignsCard() {
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedMinAmount, setSelectedMinAmount] = useState<string | null>(null);
   const [selectedMaxAmount, setSelectedMaxAmount] = useState<string | null>(null);
+
   const [selectedMinDonation, setSelectedMinDonation] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -82,27 +84,30 @@ function CampaignsCard() {
     console.log(filtered);
   }
 
-  // Filter by country
   if (selectedCountry) {
-    filtered = filtered.filter((campaign) => campaign.location === selectedCountry);
+    console.log(selectedCountry);
+    filtered = filtered.filter((campaign) => campaign.country === selectedCountry);
+    console.log(filtered);
   }
 
-  console.log(campaigns);
    // Filter by range
 if (selectedMinAmount || selectedMaxAmount) {
+  console.log(selectedMinAmount);
+  console.log(selectedMaxAmount);
   filtered = filtered.filter((campaign) => {
     const budget = parseFloat(campaign.budget.replace(/[^0-9.-]+/g, ''));
-    
+
     const minAmount = selectedMinAmount ? parseFloat(selectedMinAmount) : Number.MIN_SAFE_INTEGER;
     const maxAmount = selectedMaxAmount ? parseFloat(selectedMaxAmount) : Number.MAX_SAFE_INTEGER;
-    
-    return budget >= minAmount && budget <= maxAmount;
+
+    filtered = filtered.filter(() => budget && budget >= maxAmount);
   });
 }
 
+
   // Set the filtered campaigns
   setFilteredCampaigns(filtered);
-}, [searchTerm, selectedType, selectedMinDonation, selectedCountry, selectedMinAmount, selectedMaxAmount]);
+}, [searchTerm, selectedType, selectedMinDonation, selectedMinAmount, selectedCountry, selectedMaxAmount]);
   
 
   function handleReadMoreClick(campaignId: any, budget: string) {
@@ -121,24 +126,27 @@ if (selectedMinAmount || selectedMaxAmount) {
           Browse Our List of Impactful Donation Campaigns!
         </div>
         <div>
-          <CampaingButtonSection
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            selectedType={selectedType}
-            setSelectedType={setSelectedType}
-            selectedMinDonation={selectedMinDonation}
-            setSelectedMinDonation={setSelectedMinDonation}
-            selectedCountry={selectedCountry} // Add selectedCountry prop
-            setSelectedCountry={setSelectedCountry} // Add setSelectedCountry prop
-            selectedMinAmount={selectedMinAmount}
-            setSelectedMinAmount={setSelectedMinAmount}
-            selectedMaxAmount={selectedMaxAmount}
-            setSelectedMaxAmount={setSelectedMaxAmount}
+        <CampaingButtonSection
+  searchTerm={searchTerm}
+  setSearchTerm={setSearchTerm}
+  selectedType={selectedType}
+  setSelectedType={setSelectedType}
+  selectedMinDonation={selectedMinDonation}
+  setSelectedMinDonation={setSelectedMinDonation}
+  selectedMinAmount={selectedMinAmount}
+  setSelectedMinAmount={setSelectedMinAmount}
+  selectedMaxAmount={selectedMaxAmount}
+  setSelectedMaxAmount={setSelectedMaxAmount}
+  selectedCountry={selectedCountry}
+  setSelectedCountry={setSelectedCountry}
+  
+/>
 
-          />
+
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-center gap-16 mt-6">
           {filteredCampaigns.map((campaign) => (
+            
             
             <div
               key={campaign._id}
@@ -154,6 +162,7 @@ if (selectedMinAmount || selectedMaxAmount) {
               <div className="text-xl font-bold">{campaign.ctitle}</div>
               <div className="text-center font-normal text-base">
                 {campaign.cdescription}
+                
               </div>
               <div className="text-base font-normal">{campaign.orgname}</div>
               <div className="text-base font-normal">{campaign.budget}</div>

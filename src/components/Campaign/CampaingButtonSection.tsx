@@ -8,8 +8,8 @@ type Props = {
   setSelectedType: (term: string | null) => void;
   selectedMinDonation: string | null;
   setSelectedMinDonation: (term: string | null) => void;
-  selectedCountry: string | null; // Add selectedCountry prop
-  setSelectedCountry: (country: string | null) => void; // Add setSelectedCountry prop
+  selectedCountry: string | null;
+  setSelectedCountry: (country: string | null) => void;
 
   selectedMinAmount: string | null;
   setSelectedMinAmount: (term: string | null) => void;
@@ -20,11 +20,6 @@ type Props = {
 
 
 interface Type {
-  value: string;
-  label: string;
-}
-
-interface MinDonation {
   value: string;
   label: string;
 }
@@ -42,8 +37,12 @@ const CampaignButtonSection = ({
   setSelectedType,
   selectedMinDonation,
   setSelectedMinDonation,
-  selectedCountry, // Add selectedCountry prop
-  setSelectedCountry, // Add setSelectedCountry prop
+  selectedCountry,
+  setSelectedCountry,
+  selectedMinAmount,
+  setSelectedMinAmount,
+  selectedMaxAmount,
+  setSelectedMaxAmount,
 }: Props) => {
   const typeList: Type[] = [
     { value: "Social", label: "Social" },
@@ -60,6 +59,7 @@ const CampaignButtonSection = ({
     { value: "10", label: "10$" },
     { value: "50", label: "50$" },
   ];
+
 
   const selectedTypeValue = selectedType ?? { value: '', label: 'All' };
   const selectedMinDonationValue = selectedMinDonation ?? { value: '', label: 'All' };
@@ -85,10 +85,6 @@ const CampaignButtonSection = ({
       })
       .catch((error) => console.log(error));
   }, []);
-  
-  const handleCountryChange = (selectedOption: Country | null) => {
-    setSelectedCountry(selectedOption !== null ? selectedOption.value : null);
-  };
   
   
   
@@ -125,7 +121,15 @@ const CampaignButtonSection = ({
   const handleMaxAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setMaxAmount(parseFloat(value));
+    console.log(value)
   };
+
+  const handleCountryChange = (selectedOption: SingleValue<Country>) => {
+    const selectedCountryValue = selectedOption ? selectedOption.value : null;
+    console.log(selectedCountryValue);
+    setSelectedCountry(selectedCountryValue);
+  };
+  
 
   const filterCampaigns = () => {
     // Perform the filtering based on selected filters
@@ -136,13 +140,15 @@ const CampaignButtonSection = ({
       searchTerm,
       selectedType,
       selectedMinDonation,
-      selectedCountry,
       minamount,
       maxamount,
+      selectedCountry,
     };
 
     console.log(filteredCampaigns);
     // Update the state or make API calls to fetch campaign details based on the filters
+
+    
   };
 
   return (
@@ -220,13 +226,13 @@ const CampaignButtonSection = ({
             <span className="text-sm font-bold">Location</span>
 
             <Select
-      className="w-1/4"
-      options={countryList}
-      value={countryList.find((type) => selectedCountry && type.value === selectedCountry)}
-      onChange={handleCountryChange} // Add onChange event handler
-      placeholder="Select a country"
-      isClearable={true}
-    />
+    className="w-1/2"
+    options={countryList}
+    value={countryList.find((country) => country.value === selectedCountry)}
+    onChange={handleCountryChange}
+    placeholder="Select a country"
+    isClearable={true}
+  />
           </div>
         </div>
       </div>
