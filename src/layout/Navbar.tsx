@@ -30,6 +30,14 @@ function Navbar(props: NavbarProps) {
     
   };
 
+  const handleLogoutClick = () => {
+    // Remove the token from storage
+    localStorage.removeItem("token");
+
+    // Call the logout callback passed from the parent component
+    props.onLogout();
+  };
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -86,7 +94,7 @@ function Navbar(props: NavbarProps) {
               <div className="dropdown">
                 <button onClick={handleProfileClick}>Profile</button>
                 <button onClick={handleSettingsClick}>Settings</button>
-                <button onClick={props.onLogout}>Log Out</button>
+                <button onClick={handleLogoutClick}>Log Out</button>;
               </div>
           )}
 
