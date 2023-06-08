@@ -6,6 +6,7 @@ import { Campaign } from "./Index";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 interface Props {
@@ -21,6 +22,7 @@ interface Campaign {
   orgname: string;
   startdate: string;
   enddate: string;
+  country: String,
   mobilenum: string;
   budget: string;
   mindonation: string;
@@ -47,8 +49,6 @@ interface DataType {
   tags: string[];
 }
 
-
-
 function DonatePage() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -66,6 +66,7 @@ function DonatePage() {
 
   console.log(campaignId);
   
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -105,9 +106,9 @@ function DonatePage() {
           const formattedTableData = transactions.map((transaction: any, index: number) => ({
             key: index.toString(),
             TransactionID: transaction.transactionId,
-            WalletsAddress: transaction.transactionId.walletAddress,
+            WalletsAddress: transaction.walletAddress,
             Currency: "Bitcoin",
-            Amount: 512,
+            Amount: transaction.amount,
             UserID: transaction.transactionUserId, //get The userId from the transactionID
             tags: ["available"],
           }));
@@ -132,10 +133,11 @@ function DonatePage() {
 
 
 
-const handleDonateAnonymouslyChange = async () => {
-  try {
-    const token = localStorage.getItem("token");
-    if (token) {
+const handleDonateButton = async () => {
+  
+  const token = localStorage.getItem("token");
+  if(token){
+    try {
       const decodedToken:any = jwt_decode(token);
       const email = decodedToken.email;
       const name = decodedToken.fname +" " + decodedToken.lname;
@@ -160,10 +162,33 @@ const handleDonateAnonymouslyChange = async () => {
       );
 
       console.log(response.data);
+    } catch (error) {
+      console.error(error);
     }
+  }else if(donateAnonymously) {
+    try {const payload = {
+      transactionId: 12345, //This should be fixed
+      campaignId: campaignId,
+      walletsAddress: "0x12343453450",
+      currency: "Bitcoin",
+      amount: value,
+    };
+
+    const response = await axios.post(
+      "http://localhost:8080/transactions",
+      payload
+    );
+
+    console.log(response.data);
   } catch (error) {
     console.error(error);
   }
+  }
+  
+  else{
+    navigate("../login");
+  }
+  
 };
 
 
@@ -198,8 +223,8 @@ const handleDonateAnonymouslyChange = async () => {
     console.log(campaigndetails);
   };
 
-  const toggleDonateAnonymously = () => {
-    setDonateAnonymously(prevValue => !prevValue);
+  const handleDonateAnonymouslyChange = () => {
+    setDonateAnonymously(prevValue => !prevValue); // Toggle the value
   };
   
   
@@ -230,7 +255,7 @@ const handleDonateAnonymouslyChange = async () => {
             </div>
             <div>
               <span className="text-base font-medium">Location:</span>
-              <span>{campaigndetails?.location}</span>
+              <span>{campaigndetails?.country}</span>
             </div>
             <div>
             
@@ -270,15 +295,17 @@ const handleDonateAnonymouslyChange = async () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                 />
-                <motion.div
+
+                <motion.input
                   className="flex flex-row gap-4 bg-[#FEAE0F40] px-7 py-3  rounded-lg"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
+                  type="number"
+                  value={value}
+                  min={campaigndetails?.minDonationAmount}
+                  max={numericBudget}
+                  onChange={handleChange}
                 >
-                  <span className="font-bold text-xl">$</span>
-                  <span className="text-xl">{value}</span>
-                </motion.div>
+
+                </motion.input>
               </div>
               <motion.div
                 className="flex flex-row gap-4 "
@@ -286,20 +313,20 @@ const handleDonateAnonymouslyChange = async () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.9 }}
               >
-                <input
-                  type="radio"
-                  className=""
-                  
-                  onChange={handleDonateAnonymouslyChange}
-                />
-                <span>Donate Anonymously</span>
+       <input
+  type="radio"
+  className=""
+  checked={donateAnonymously}
+  onChange={handleDonateAnonymouslyChange}
+/>
+<span>Donate Anonymously</span>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 1.2 }}
               >
-                <button className="text-[#00B5D5] font-bold border border-[#00B5D5] p-2 rounded-md hover:bg-[#00B5D5] hover:text-white" onClick={handleDonateAnonymouslyChange}>
+                <button className="text-[#00B5D5] font-bold border border-[#00B5D5] p-2 rounded-md hover:bg-[#00B5D5] hover:text-white" onClick={handleDonateButton}>
                   Donate 💙
                 </button>
               </motion.div>

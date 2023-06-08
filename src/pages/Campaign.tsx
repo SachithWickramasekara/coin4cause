@@ -14,7 +14,7 @@ interface Campaign {
   startdate: string;
   enddate: string;
   mobilenum: string;
-  location: string;
+  country: string;
   budget: string;
   mindonation: string;
   currency: string;
@@ -31,10 +31,12 @@ function CampaignsCard() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState<string | null>(null);
-  // const [selectedMinAmount, setSelectedMinAmount] = useState<string | null>(null);
-  // const [selectedMaxAmount, setSelectedMaxAmount] = useState<string | null>(null);
-  // const [selectedMinDonation, setSelectedMinDonation] = useState<string | null>(null);
-  // const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const [selectedMinAmount, setMinAmount] = useState<number | null>(null);
+  const [selectedMaxAmount, setMaxAmount] = useState<number | null>(null);
+
+  const [selectedMinDonation, setSelectedMinDonation] = useState<string | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -59,7 +61,7 @@ function CampaignsCard() {
   // console.log(campaign.ctype)
 
   useEffect(() => {
-  let filtered = campaigns;
+    let filtered = [...campaigns];
 
   // Filter by search term
   filtered = filtered.filter((campaign) =>
@@ -68,27 +70,42 @@ function CampaignsCard() {
 
   // Filter by campaign type
   if (selectedType) {
+    console.log(selectedType);
+  
     filtered = filtered.filter((campaign) => campaign.ctype === selectedType);
+    console.log(filtered);
   }
+
+  // Filter by minimum donation
+  if (selectedMinDonation) {
+    console.log(selectedMinDonation);
+  
+    filtered = filtered.filter((campaign) => campaign.mindonation === selectedMinDonation);
+    console.log(filtered);
+  }
+
+  if (selectedCountry) {
+    console.log(selectedCountry);
+    filtered = filtered.filter((campaign) => campaign.country === selectedCountry);
+    console.log(filtered);
+  }
+
+  if (selectedMinAmount !== null && selectedMaxAmount !== null) {
+    filtered = filtered.filter((campaign) => {
+      let campaignAmount = parseFloat(campaign.budget.replace(/[$,]/g, ''));
+  
+      return (
+        selectedMinAmount <= campaignAmount && campaignAmount <= selectedMaxAmount
+      );
+    });
+  }
+  
+  
+
 
   // Set the filtered campaigns
   setFilteredCampaigns(filtered);
-}, [searchTerm, selectedType, campaigns]);useEffect(() => {
-  let filtered = campaigns;
-
-  // Filter by search term
-  filtered = filtered.filter((campaign) =>
-    campaign.ctitle.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // Filter by campaign type
-  if (selectedType) {
-    filtered = filtered.filter((campaign) => campaign.ctype === selectedType);
-  }
-
-  // Set the filtered campaigns
-  setFilteredCampaigns(filtered);
-}, [searchTerm, selectedType, campaigns]);
+}, [searchTerm, selectedType, selectedMinDonation, selectedMinAmount, selectedCountry, selectedMaxAmount]);
   
 
   function handleReadMoreClick(campaignId: any, budget: string) {
@@ -107,15 +124,27 @@ function CampaignsCard() {
           Browse Our List of Impactful Donation Campaigns!
         </div>
         <div>
-          <CampaingButtonSection
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            selectedType={selectedType}
-            setSelectedType={setSelectedType}
-          />
+        <CampaingButtonSection
+  searchTerm={searchTerm}
+  setSearchTerm={setSearchTerm}
+  selectedType={selectedType}
+  setSelectedType={setSelectedType}
+  selectedMinDonation={selectedMinDonation}
+  setSelectedMinDonation={setSelectedMinDonation}
+  selectedMinAmount={selectedMinAmount}
+  setMinAmount={setMinAmount}
+  selectedMaxAmount={selectedMaxAmount}
+  setMaxAmount={setMaxAmount}
+  selectedCountry={selectedCountry}
+  setSelectedCountry={setSelectedCountry}
+  
+/>
+
+
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-center gap-16 mt-6">
           {filteredCampaigns.map((campaign) => (
+            
             
             <div
               key={campaign._id}
@@ -131,6 +160,7 @@ function CampaignsCard() {
               <div className="text-xl font-bold">{campaign.ctitle}</div>
               <div className="text-center font-normal text-base">
                 {campaign.cdescription}
+                
               </div>
               <div className="text-base font-normal">{campaign.orgname}</div>
               <div className="text-base font-normal">{campaign.budget}</div>

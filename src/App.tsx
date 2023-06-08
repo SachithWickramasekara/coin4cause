@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Footer from "./layout/Footer";
 import jwt_decode from "jwt-decode";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -56,6 +57,8 @@ function App() {
         <Route path={routePaths.home} element={<Landing isLoggedIn={isLoggedIn}/>} />
         <Route path={routePaths.login} element={<Login setLoggedIn={setLoggedIn} />} />
         <Route path={routePaths.signup} element={<SignUp />} />
+
+        <Route path="*" element={<NotFound />} />
         <Route
           path={routePaths.usernamepassword}
           element={<UsernamePassword />}
